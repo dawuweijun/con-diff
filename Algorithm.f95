@@ -9,21 +9,21 @@ implicit none
 contains
 !统一接口
 function MEResolve(in_mat,in_right)
-	real,dimension(:),pointer:MEResolve
+	real,dimension(:),pointer::MEResolve
 	type(DiagMatrix)::in_mat
 	real,dimension(:),allocatable::in_right
+	print*,"I am called here !"
 end function
 subroutine TDMAResolveTri(in_mat,in_right_b,out_ans)
-	type(TriDiagMatrix),intent(in)::in_mat
+	type(DiagMatrix),intent(in)::in_mat
 	real,dimension(:),intent(in)::in_right_b
 	real,dimension(:),allocatable,intent(out)::out_ans
 	real,dimension(:),allocatable::temp
 	integer MaxSize,I
 	logical matreasonable
-!判断矩阵的合理性
-	call IsMatReasonable(in_mat,matreasonable)
-if(matreasonable)then
-	call MatSize(in_mat,MaxSize)
+!判断矩阵的合理性	
+if(IsMatReasonable(in_mat))then
+	MaxSize=getMatSize(in_mat)
 	if(size(in_right_b)==MaxSize) then
 		allocate(out_ans(MaxSize),temp(MaxSize))
 	else
@@ -54,18 +54,17 @@ end subroutine
 !***************************五对角矩阵及其算法*************************
 !*********************************************************************
 subroutine TDMAResolveFive(in_mat,in_right_b,out_ans)
-type(FiveDiagMatrix),intent(in)::in_mat
+type(DiagMatrix),intent(in)::in_mat
 	real,dimension(:),intent(in)::in_right_b
 	real,dimension(:),allocatable,intent(out)::out_ans
 	real,dimension(:),allocatable::temp_R
-	type(TriDiagMatrix)::tempTriMat
+	type(DiagMatrix)::tempTriMat
 	integer MaxSize,I
 	logical matreasonable
 	real temp
 !判断矩阵的合理性
-	call IsMatReasonable(in_mat,matreasonable)
-	if(matreasonable)then
-		call MatSize(in_mat,MaxSize)
+	if(IsMatReasonable(in_mat))then
+		MaxSize=getMatSize(in_mat)
 		if(size(in_right_b)/=MaxSize) then
 			print*,"The Size Of The Vector Is Not Right: Quiting Now !"
 			stop
