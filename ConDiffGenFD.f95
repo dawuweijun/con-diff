@@ -1,8 +1,10 @@
 module ConDiffGenFD
+!边界
 use BoundaryDefine
 use BoundaryLoad
+!网格
 use GridDefine
-!use Grid
+use GridLoad
 
 type FDPairs
 	integer FDSize
@@ -40,5 +42,15 @@ function GenFDPairs(in_boundary_path,in_grid_path)
 	if(success/=0)then
 		print*,"Error When Loading Boundary:",errors
 		stop
+!给FDPairs分配内存
+	GenFDPairs%FDSize=s1dgrid%NumberOfPoints+1
+	allocate(GenFDPairs%F(GenFDPairs%FDSize),GenFDPairs%D(GenFDPairs%FDSize))
+!整体赋值
+	GenFDPairs%F=f1dsboundary%Velocity*f1dsboundary%Density
+	GenFDPairs%D=f1dsboundary%Gama*s1dgrid%NumberOfPoints/s1dgrid%Lenth
+!边界处理
+	GenFDPairs%D(1)=GenFDPairs%D(1)*2
+	GenFDPairs%D(GenFDPairs%FDSize)=GenFDPairs%D(GenFDPairs%FDSize)*2
+!完毕
 end function
 end module

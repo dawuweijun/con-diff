@@ -45,17 +45,12 @@ function IsMatReasonable(in_mat)
 	IsMatReasonable=.false.
 	select case(in_mat%MatType)
 	case(3)
-		if (((size(in_mat%left_W)).eq.(size(in_mat%left_P))).and.&
-			((size(in_mat%left_W)).eq.(size(in_mat%left_E))))then
-			IsMatReasonable=.true.
-		end if
+		IsMatReasonable=isArrySizeEqual2_3&
+		(in_mat%MatSize,in_mat%left_W,in_mat%left_P,in_mat%left_E)
 	case(5)
-		if (size(in_mat%left_WW).eq.size(in_mat%left_W).AND.&
-		size(in_mat%left_WW).eq.size(in_mat%left_P).AND.&
-		size(in_mat%left_WW).eq.size(in_mat%left_E).AND.&
-		size(in_mat%left_WW).eq.size(in_mat%left_EE))then
-		IsMatReasonable=.true.
-		end if
+		IsMatReasonable=isArrySizeEqual2_5&
+		(in_mat%MatSize,in_mat%left_WW,in_mat%left_W,&
+		in_mat%left_P,in_mat%left_E,in_mat%left_EE)
 	end select
 end function
 !******************************************************************************
@@ -66,6 +61,44 @@ function getMatSize(in_mat)
 		getMatSize=in_mat%MatSize
 	else
 		getMatSize=0
+	end if
+end function
+
+function isArrySizeEqual2_2(length,arry_1,arry_2)
+	logical isArrySizeEqual2_2
+	integer,intent(in)::length
+	real,dimension(:),allocatable,intent(in)::arry_1,arry_2
+	if(size(arry_1)==length.and.size(arry_2)==length)then
+		isArrySizeEqual2_2=.true.
+	else
+		isArrySizeEqual2_2=.false.
+	end if
+end function
+function isArrySizeEqual23(length,arry_1,arry_2,arry_3)
+	logical isArrySizeEqual2_3
+	integer,intent(in)::length
+	real,dimension(:),allocatable,intent(in)::arry_1,arry_2,arry_3
+	if(size(arry_1)==length.and.&
+		size(arry_2)==length.and.&
+		size(arry_3)==length)then
+		isArrySizeEqual2_3=.true.
+	else
+		isArrySizeEqual2_3=.false.
+	end if
+end function
+function isArrySizeEqual2_5(length,arry_1,arry_2,arry_3,arry_4,arry_5)
+	logical isArrySizeEqual2_5
+	integer,intent(in)::length
+	real,dimension(:),allocatable,intent(in)::&
+	arry_1,arry_2,arry_3,arry_4,arry_5
+	if(size(arry_1)==length.and.&
+		size(arry_2)==length.and.&
+		size(arry_3)==length.and.&
+		size(arry_4)==length.and.&
+		size(arry_5)==length) then
+		isArrySizeEqual2_5=.true.
+	else
+		isArrySizeEqual2_5=.false.
 	end if
 end function
 end module

@@ -18,13 +18,14 @@ subroutine ConDiffScheme1D(out_mat,in_scheme,in_FDPairs)
 	if(in_scheme<0)then
 		return
 	end if
+!分配内存在此处，下面的子程序不再分配内存
 end subroutine
 !********************************************************************
 !中心差分 central deferential
 !********************************************************************
 !F，D不定，考虑边界，F，D的长度应为界面数，及点数+1
 subroutine ConDiffSchemeCnetral1DSUSPe(A_W,A_P,A_E,F,D)
-	real,dimension(:),allocatable,intent(out)::A_W,A_P,A_E
+	real,dimension(:),allocatable,intent(inout)::A_W,A_P,A_E
 	real,dimension(:),intent(in)::F,D
 	integer N,I
 !D_left=D(1),D_right=D(N+1)
@@ -35,11 +36,7 @@ subroutine ConDiffSchemeCnetral1DSUSPe(A_W,A_P,A_E,F,D)
 		print*,"Errs in ConDiffSchemeCnetral''s paras:Quiting"
 		stop
 	end if
-!分配内存
-	allocate(A_W(1:N))
-	allocate(A_P(1:N))
-	allocate(A_E(1:N))
-!
+!判断内存长度
 	do I=1,N
 		A_W(I)=D(I)+F(I)*0.5
 		A_E(I)=D(I+1)-F(I+1)*0.5
@@ -61,7 +58,7 @@ subroutine ConDiffSchemeUpwind1DSUSPe(A_W,A_P,A_E,F,D)
 		print*,"Errs in CondiffSchemeUpWind''s paras:Quiting"
 		stop
 	end if
-	allocate(A_W(1:N),A_P(1:N),A_E(1:N))
+!判断内存长度
 !
 	do I=1,N
 		A_W(I)=D(I)+max(F(I),0.)
@@ -84,7 +81,7 @@ subroutine ConDiffSchemeHybrid1DSUSPe(A_W,A_P,A_E,F,D)
 		print*,"Errs in CondiffSchemeUpWind''s paras:Quiting"
 		stop
 	end if
-	allocate(A_W(1:N),A_P(1:N),A_E(1:N))
+!判断内存长度
 !
 	do I=1,N
 		A_W(I)=max(F(I),(D(I)+F(I)*0.5),0.)
@@ -106,7 +103,7 @@ subroutine ConDiffSchemeExp1DSUSPe(A_W,A_P,A_E,F,D)
 		print*,"Errs in CondiffSchemeUpWind''s paras:Quiting"
 		stop
 	end if
-	allocate(A_W(N),A_P(N),A_E(N))
+!判断内存长度
 !注意，A_W(0)与A_E(N)不设为零，主要用来存储方程右侧系数Su
 end subroutine
 !********************************************************************
@@ -126,7 +123,7 @@ subroutine ConDiffSchemePowerLaw1DSUSPe(A_W,A_P,A_E,F,D)
 		print*,"Errs in CondiffSchemeUpWind''s paras:Quiting"
 		stop
 	end if
-	allocate(A_W(1:N),A_P(1:N),A_E(1:N))
+!判断内存长度
 	do I=1,N
 		temp_1=1.-0.1*abs(F(I)/D(I))
 		temp_2=1.-0.1*abs(F(I+1)/D(I+1))
@@ -160,7 +157,8 @@ subroutine ConDiffSchemeStandQUICK1DSUSPE(A_WW,A_W,A_P,A_E,A_EE,F,D)
 		print*,"Errs in CondiffSchemeUpWind''s paras:Quiting"
 		stop
 	end if
-	allocate(A_WW(N),A_W(N),A_P(N),A_E(N),A_EE(N))
+!	allocate(A_WW(N),A_W(N),A_P(N),A_E(N),A_EE(N))
+!判断内存长度
 	do I=0,N
 		A_temp=max(F(I+1),0.)
 		B_temp=max(-F(I),0.)

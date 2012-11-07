@@ -31,7 +31,7 @@ implicit none
 !调用输入解析模块，解析输入文件
 !*************************************************************
 	call InitParameters(parameters)
-	in_scheme=getScheme(parameters)
+	read(getScheme(parameters),*) in_scheme
 	in_boundary_path=getBoundaryFilePath(parameters)
 	in_grid_path=getGridFilePath(parameters)
 	call ConDiffScheme1D(mat,in_scheme,GenFDPairs(in_boundary_path,in_grid_path))
