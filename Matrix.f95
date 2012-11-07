@@ -13,8 +13,8 @@ end type
 contains
 !******************************************************************************
 function BuildDiagMatrix(mat_type,mat_size)
-type(DiagMatrix)::BuildDiagMatrix
-integer,intent(in)::mat_type,mat_size
+	type(DiagMatrix)::BuildDiagMatrix
+	integer,intent(in)::mat_type,mat_size
 end function
 !******************************************************************************
 function BuildTriDiagMatrix(in_N)
@@ -67,17 +67,17 @@ end function
 function isArrySizeEqual2_2(length,arry_1,arry_2)
 	logical isArrySizeEqual2_2
 	integer,intent(in)::length
-	real,dimension(:),allocatable,intent(in)::arry_1,arry_2
+	real,dimension(:),pointer,intent(in)::arry_1,arry_2
 	if(size(arry_1)==length.and.size(arry_2)==length)then
 		isArrySizeEqual2_2=.true.
 	else
 		isArrySizeEqual2_2=.false.
 	end if
 end function
-function isArrySizeEqual23(length,arry_1,arry_2,arry_3)
+function isArrySizeEqual2_3(length,arry_1,arry_2,arry_3)
 	logical isArrySizeEqual2_3
 	integer,intent(in)::length
-	real,dimension(:),allocatable,intent(in)::arry_1,arry_2,arry_3
+	real,dimension(:),pointer,intent(in)::arry_1,arry_2,arry_3
 	if(size(arry_1)==length.and.&
 		size(arry_2)==length.and.&
 		size(arry_3)==length)then
@@ -89,7 +89,7 @@ end function
 function isArrySizeEqual2_5(length,arry_1,arry_2,arry_3,arry_4,arry_5)
 	logical isArrySizeEqual2_5
 	integer,intent(in)::length
-	real,dimension(:),allocatable,intent(in)::&
+	real,dimension(:),pointer,intent(in)::&
 	arry_1,arry_2,arry_3,arry_4,arry_5
 	if(size(arry_1)==length.and.&
 		size(arry_2)==length.and.&

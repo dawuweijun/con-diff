@@ -11,7 +11,7 @@ implicit none
 
 contains
 subroutine ConDiffScheme1D(out_mat,in_scheme,in_FDPairs)
-	type(DiagMatrix),intent(out)::out_mat
+	type(DiagMatrix),intent(inout)::out_mat
 	integer,intent(in)::in_scheme
 	type(FDPairs),intent(in)::in_FDPairs
 !根据in_scheme的不同选择不同算法

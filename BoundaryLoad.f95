@@ -1,6 +1,8 @@
 module BoundaryLoad
+
 use BoundaryDefine
 use FileOperate
+
 implicit none
 interface readBoundary
 module procedure readBoundaryFile1DS
@@ -62,7 +64,7 @@ function readBoundaryFile1DS(this,strFilePath,error)
 		error=error(1:len_trim(error))//'errs4gama;'
 		readBoundaryFile1DS=success
 	else
-		read(tempvalue) this%Gama
+		read(tempvalue,*) this%Gama
 	end if
 !关闭边界文件
 	close(16)

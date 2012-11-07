@@ -45,16 +45,16 @@ end if
 !文件读入成功
 end subroutine
 !读取文件参数
-function ReadConfFile(this,strFilePath,error)
+function ReadConfFile(this,strFilePath,errorInfo)
 	character(128)::strFilePath
 	type(GlobleParameters)::this
-	character(128)::error
+	character(128)::errorInfo
 	integer::ReadConfFile,success
 	character(128)::nameBoundaryPath,nameGridPath,&
 	namescheme,nameOutPutType,nameOutPutPath
 	ReadConfFile=0
 	this%ConfiureFilePath=strFilePath
-	error=""
+	errorInfo=""
 	nameBoundaryPath='BoundaryFilePath'
 	nameGridPath='GridInputFilePath'
 	namescheme='Scheme'

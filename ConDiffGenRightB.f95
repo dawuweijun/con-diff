@@ -1,7 +1,7 @@
 module ConDiffGenRightB
-use Matrix
 !简化，根据边界条件文件，矩阵，格式选择计算右侧向量
 !一维
+use Matrix
 implicit none
 contains
 subroutine ConDiffGenRightB1D&

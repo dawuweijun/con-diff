@@ -1,17 +1,18 @@
 module GridLoad
 use GridDefine
 use FileOperate
+implicit none
 
 interface readGrid
 module procedure readGridS1D
 end interface
 
-type Simple1DGrid
-	character(128)::GridFilePath
-	integer NumberOfPoints			!至少为1
-	real Length						!计算区域长度，大于零
+!type Simple1DGrid
+!	character(128)::GridFilePath
+!	integer NumberOfPoints			!至少为1
+!	real Length						!计算区域长度，大于零
 !	logical HafeVolume				!是否存在半个体积的计算单元
-end type
+!end type
 
 contains
 function readGridS1D(this,strFilePath,error)

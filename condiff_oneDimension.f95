@@ -4,12 +4,6 @@
 ! LICENSE:
 ! This is main programe for solving the convection-diffusion problem.
 ! INPUT:the path of parameters file and the path of of out file.
-include"ConDiffSchemes1DUS.f95"
-include"Algorithm.f95"
-include"ConDiffGloble.f95"
-include"ConDiffGenFD.f95"
-include"Matrix.f95"
-include"ConDiffGenRightB.f95"
 program condiff
 use ConDiffGloble
 use Matrix

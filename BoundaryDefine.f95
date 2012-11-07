@@ -1,5 +1,5 @@
 module BoundaryDefine
-
+implicit none
 type BoundaryFirst1DSteady
 	character(128)::BoundaryFilePath
 	real Phi_left
@@ -9,15 +9,14 @@ type BoundaryFirst1DSteady
 	real Gama
 end type
 
-
 contains
 !******************************************************************************
 
-subroutine getDensity(this)
+function getDensity(this)
 	type(BoundaryFirst1DSteady),intent(in)::this
-	real,intent(out)::getDensity
+	real::getDensity
 	getDensity=this%Density
-end subroutine
+end function
 
 function getPhiLeft(this)
 	type(BoundaryFirst1DSteady),intent(in)::this
