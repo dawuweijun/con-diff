@@ -1,12 +1,12 @@
 module BoundaryDefine
+
 type BoundaryFirst1DSteady
+	character(128)::BoundaryFilePath
 	real Phi_left
 	real Phi_right
 	real Velocity
 	real Density
 	real Gama
-end type
-type BoundaryFirst1DUSteady
 end type
 
 

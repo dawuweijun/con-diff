@@ -6,4 +6,4 @@
 compiler=gfortran
 all:condiff_1d
 clean:
-	rm -f ./*~
+	rm -f ./*~ ./*.mod

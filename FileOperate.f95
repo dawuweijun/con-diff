@@ -64,7 +64,7 @@ function getArgs(FILEUNIT,notelabel,argname,splitlabel,inout_arg)
 !获得大写变量名称
 			tempname=ToUperCase(tempname)
 			if (tempname==ToUperCase(argname))then!相等，取值，退出
-				inout_arg=tempvalue
+				inout_arg=trim(tempvalue)
 				getArgs=0
 				exit
 			end if

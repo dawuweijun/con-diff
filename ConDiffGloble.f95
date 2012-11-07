@@ -2,6 +2,7 @@
 !定义，初始化全局变量，读取输入参数，解析输入文件
 !*************************************************************
 module ConDiffGloble
+use FileOperate
 implicit none
 !*******************输入文件参数格式说明***********************
 !一维稳态，对流扩散问题，多种可选格式
@@ -10,7 +11,7 @@ type GlobleParameters
 	character(128)::ConfiureFilePath		!输入文件路径，由命令行获取
 	character(128)::BoundaryFilePath	!边界文件路径，由配置文件获取
 	character(128)::GridInputFilePath	!网格文件路径，由配置文件获取
-	character(128)::scheme				!格式选择，有配置文件获取
+	character(128)::Scheme				!格式选择，有配置文件获取
 	character(128)::OutPutFileType			!输出类型，由配置文件获取
 	character(128)::OutPutFilePath			!输出路径，由配置文件获取
 end type
@@ -38,6 +39,8 @@ end if
 	if(ReadConfFile(this,args,errorInfo)/=0) then
 		print*,errorInfo !错误输出
 		stop!退出程序
+	else
+		print*,"Success In Reading The Configure File!"
 	end if
 !文件读入成功
 end subroutine
@@ -46,15 +49,50 @@ function ReadConfFile(this,strFilePath,error)
 	character(128)::strFilePath
 	type(GlobleParameters)::this
 	character(128)::error
-	integer::ReadConfFile
-	character(128)::tempBoundaryPath,tempGridPath,&
-	tempscheme,tempOutPutType,tempOutPutPath
-	ReadConfFile=-1
+	integer::ReadConfFile,success
+	character(128)::nameBoundaryPath,nameGridPath,&
+	namescheme,nameOutPutType,nameOutPutPath
+	ReadConfFile=0
 	this%ConfiureFilePath=strFilePath
 	error=""
-!读入文件
-
-!
+	nameBoundaryPath='BoundaryFilePath'
+	nameGridPath='GridInputFilePath'
+	namescheme='Scheme'
+	nameOutPutType='OutPutFileType'
+	nameOutPutPath='OutPutFilePath'
+!打开文件
+	open(unit=8,file=this%ConfiureFilePath,status='old',action='read')
+!边界条件
+		 success=getArgs(8,'!',nameBoundaryPath,'=',this%BoundaryFilePath)
+		 if(success/=0)then
+		 	ReadConfFile=success
+		 	errorInfo="errs 4 boundary;"
+		 end if
+!网格
+		success=getArgs(8,'!',nameGridPath,'=',this%GridInputFilePath)
+		if(success/=0)then
+		 	ReadConfFile=success
+		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs 4 Grid;"
+		end if
+!格式选择
+		success=getArgs(8,'!',namescheme,'=',this%Scheme)
+		if(success/=0)then
+		 	ReadConfFile=success
+		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs 4 Scheme;"
+		end if
+!输出类型
+		success=getArgs(8,'!',nameOutPutType,'=',this%OutPutFileType)
+		if(success/=0)then
+		 	ReadConfFile=success
+		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs 4 OutPutType;"
+		end if
+!输出路径
+		success=getArgs(8,'!',nameOutPutPath,'=',this%OutPutFilePath)
+		if(success/=0)then
+		 	ReadConfFile=success
+		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs 4 OutPutPath;"
+		end if
+	close(8)
 end function
 !获取边界文件路径
 function getBoundaryFilePath(this)
@@ -112,5 +150,4 @@ function IsFileExist(filepath)
 	end if
 	close(unit=fileptr)
 end function
-
 end module
