@@ -25,10 +25,16 @@ function readGridS1D(this,strFilePath,error)
 	this%GridFilePath=strFilePath
 	nameNumberOfPoints='NumberOfPoints'
 	nameLength='Length'
+	error=''!清空错误缓存
 !打开网格文件
+    if(IsFileExist(strFilePath).neqv..true.)then
+    	print*,"This GridFile Does Not Exist: Quiting ."
+    	stop
+    end if
 	readGridS1D=0
 	open(unit=24,file=strFilePath,status="old",action='read')
 !NumberOfPoints
+	success=getArgs(24,'!',nameNumberOfPoints,'=',tempvalue)
 	if(success/=0)then
 		error=error(1:len_trim(error))//'errs4NumberOfPoints;'
 		readGridS1D=success

@@ -16,7 +16,7 @@ sources = condiff_oneDimension.f95 \
 		BoundaryLoad.f95 \
 		GridDefine.f95 \
 		GridLoad.f95 \
-		Algorithm.f95
+		DiagMatEquationSolve.f95
 
 exeoutput= main
 all:condiff_1d

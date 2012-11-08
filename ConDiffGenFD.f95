@@ -35,14 +35,18 @@ function GenFDPairs(in_boundary_path,in_grid_path)
 !载入网格文件
 	success=readGrid(s1dgrid,in_grid_path,errors)
 	if(success/=0)then
-		print*,"Errors When Loading Grid:",errors
+		print*,"Errors When Loading Grid : ",errors
 		stop
+	else
+		print*,"Success In Loading The Grid File."
 	end if
 !载入边界文件
 	success=readBoundary(f1dsboundary,in_boundary_path,errors)
 	if(success/=0)then
-		print*,"Error When Loading Boundary:",errors
+		print*,"Error When Loading Boundary : ",errors
 		stop
+	else
+		print*,"Success In Loading The Boundary File."
 	end if
 !给FDPairs分配内存
 	GenFDPairs%FDSize=s1dgrid%NumberOfPoints+1

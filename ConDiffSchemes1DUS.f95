@@ -10,22 +10,59 @@ implicit none
 !中心差分格式
 
 contains
-subroutine ConDiffScheme1D(out_mat,in_scheme,in_FDPairs)
-	type(DiagMatrix),intent(inout)::out_mat
+subroutine ConDiffScheme1D(inout_mat,in_scheme,in_FDPairs)
+	type(DiagMatrix),intent(inout)::inout_mat
 	integer,intent(in)::in_scheme
 	type(FDPairs),intent(in)::in_FDPairs
+	print*,'The Scheme You Selected Is :',in_scheme
 !根据in_scheme的不同选择不同算法
-	if(in_scheme<0)then
+!TODO:完善该处程序
+	if(in_scheme<0.or.in_scheme>5)then
+		inout_mat%MatSize=-1
 		return
 	end if
+!给inout_mat分配内存
+	if(in_scheme<5)then
+		inout_mat=BuildTriDiagMatrix(in_FDPairs%FDSize-1)
+	else
+		inout_mat=BuildFiveDiagMatrix(in_FDPairs%FDSize-1)
+	end if
+	select case(in_scheme)
+!0，中心差分
+case(0)
+	call ConDiffSchemeCnetral1DSUSPe&
+(inout_mat%left_W,inout_mat%left_P,inout_mat%left_E,in_FDPairs%F,in_FDPairs%D)
+!1,迎风格式
+case(1)
+	call ConDiffSchemeUpwind1DSUSPe&
+(inout_mat%left_W,inout_mat%left_P,inout_mat%left_E,in_FDPairs%F,in_FDPairs%D)
+!2，混合格式
+case(2)
+	call ConDiffSchemeHybrid1DSUSPe&
+(inout_mat%left_W,inout_mat%left_P,inout_mat%left_E,in_FDPairs%F,in_FDPairs%D)
+!3,指数格式
+case(3)
+	call ConDiffSchemeExp1DSUSPe&
+(inout_mat%left_W,inout_mat%left_P,inout_mat%left_E,in_FDPairs%F,in_FDPairs%D)
+!4,power-law
+case (4)
+	call ConDiffSchemePowerLaw1DSUSPe&
+(inout_mat%left_W,inout_mat%left_P,inout_mat%left_E,in_FDPairs%F,in_FDPairs%D)
+!5,
+case (5)
+	call ConDiffSchemeStandQUICK1DSUSPE&
+(inout_mat%left_WW,inout_mat%left_W,inout_mat%left_P,&
+inout_mat%left_E,inout_mat%left_EE,in_FDPairs%F,in_FDPairs%D)	
+	end select
+	
 !分配内存在此处，下面的子程序不再分配内存
 end subroutine
 !********************************************************************
-!中心差分 central deferential
+!0,中心差分 central deferential
 !********************************************************************
 !F，D不定，考虑边界，F，D的长度应为界面数，及点数+1
 subroutine ConDiffSchemeCnetral1DSUSPe(A_W,A_P,A_E,F,D)
-	real,dimension(:),allocatable,intent(inout)::A_W,A_P,A_E
+	real,dimension(:),intent(inout)::A_W,A_P,A_E
 	real,dimension(:),intent(in)::F,D
 	integer N,I
 !D_left=D(1),D_right=D(N+1)
@@ -45,11 +82,11 @@ subroutine ConDiffSchemeCnetral1DSUSPe(A_W,A_P,A_E,F,D)
 !注意，A_W(0)与A_E(N)不设为零，主要用来存储方程右侧系数Su
 end subroutine
 !********************************************************************
-!一阶向前差分 upwind scheme
+!1,一阶向前差分 upwind scheme
 !********************************************************************
 !不定F，不定D型
 subroutine ConDiffSchemeUpwind1DSUSPe(A_W,A_P,A_E,F,D)
-	real,dimension(:),allocatable,intent(out)::A_W,A_P,A_E
+	real,dimension(:),intent(out)::A_W,A_P,A_E
 	real,dimension(:),intent(in)::F,D
 	integer N,I
 	if(size(F)==size(D))then
@@ -68,17 +105,17 @@ subroutine ConDiffSchemeUpwind1DSUSPe(A_W,A_P,A_E,F,D)
 !注意，A_W(0)与A_E(N)不设为零，主要用来存储方程右侧系数Su
 end subroutine
 !********************************************************************
-!混合格式 hybrid scheme
+!2,混合格式 hybrid scheme
 !********************************************************************
 !不定F，不定D型
 subroutine ConDiffSchemeHybrid1DSUSPe(A_W,A_P,A_E,F,D)
-	real,dimension(:),allocatable,intent(out)::A_W,A_P,A_E
+	real,dimension(:),intent(out)::A_W,A_P,A_E
 	real,dimension(:),intent(in)::F,D
 	integer N,I
 	if(size(F)==size(D)) then
 		N=size(F)-1
 	else
-		print*,"Errs in CondiffSchemeUpWind''s paras:Quiting"
+		print*,"Errs in CondiffSchemeUpWind's paras:Quiting"
 		stop
 	end if
 !判断内存长度
@@ -91,27 +128,27 @@ subroutine ConDiffSchemeHybrid1DSUSPe(A_W,A_P,A_E,F,D)
 !注意，A_W(0)与A_E(N)不设为零，主要用来存储方程右侧系数Su
 end subroutine
 !********************************************************************
-!指数格式
+!3,指数格式
 !********************************************************************
 subroutine ConDiffSchemeExp1DSUSPe(A_W,A_P,A_E,F,D)
-	real,dimension(:),allocatable,intent(out)::A_W,A_P,A_E
+	real,dimension(:),intent(out)::A_W,A_P,A_E
 	real,dimension(:),intent(in)::F,D
 	integer N,I
 	if(size(F)==size(D)) then
 		N=size(F)-1
 	else
-		print*,"Errs in CondiffSchemeUpWind''s paras:Quiting"
+		print*,"Errs in ConDiffSchemeExp1D's paras:Quiting"
 		stop
 	end if
 !判断内存长度
 !注意，A_W(0)与A_E(N)不设为零，主要用来存储方程右侧系数Su
 end subroutine
 !********************************************************************
-!乘方格式 power-law scheme
+!4,乘方格式 power-law scheme
 !********************************************************************
 !不定F，不定D型
 subroutine ConDiffSchemePowerLaw1DSUSPe(A_W,A_P,A_E,F,D)
-	real,dimension(:),allocatable,intent(out)::A_W,A_P,A_E
+	real,dimension(:),intent(out)::A_W,A_P,A_E
 	real,dimension(:),intent(in)::F,D
 	integer N,I
 	real::temp
@@ -144,10 +181,10 @@ end subroutine
 !********************************************************************
 
 !********************************************************************
-!标准 quick格式 QUICK scheme
+!6,标准quick格式 QUICK scheme
 !********************************************************************
 subroutine ConDiffSchemeStandQUICK1DSUSPE(A_WW,A_W,A_P,A_E,A_EE,F,D)
-	real,dimension(:),allocatable,intent(out)::A_WW,A_W,A_P,A_E,A_EE
+	real,dimension(:),intent(out)::A_WW,A_W,A_P,A_E,A_EE
 	real,dimension(:),intent(in)::F,D
 	integer N,I
 	real A_temp,B_temp,C_temp,D_temp

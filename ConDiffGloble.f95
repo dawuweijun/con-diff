@@ -19,24 +19,13 @@ end type
 contains
 !******************************************************************************
 !获取主配置文件路径，并且读取其中参数
-subroutine InitParameters(this)
+subroutine InitParameters(this,configurefile)
 	type (GlobleParameters),intent(in)::this
-	integer::argc!the number of parameters from command line
-	character(128)::args!for saving the parameter string
+	character(128)::configurefile
 	character(128)::errorInfo
-	argc=iargc() !
-	if(argc/=2)then
-		print*,"You should input the parameter file path . Quiting Now！"
-		stop						!退出
-	end if
-	call getarg(2,args)
-!文件是否存在
-if (IsFileExist(args).neqv..true.) then
-	print*,"The Configure file you selected dosen't exist:Quiting"
-	stop
-end if
+	
 !TODO:文件存在，调用解析函数读入
-	if(ReadConfFile(this,args,errorInfo)/=0) then
+	if(ReadConfFile(this,configurefile,errorInfo)/=0) then
 		print*,errorInfo !错误输出
 		stop!退出程序
 	else
@@ -66,31 +55,31 @@ function ReadConfFile(this,strFilePath,errorInfo)
 		 success=getArgs(8,'!',nameBoundaryPath,'=',this%BoundaryFilePath)
 		 if(success/=0)then
 		 	ReadConfFile=success
-		 	errorInfo="errs 4 boundary;"
+		 	errorInfo="errs4boundary;"
 		 end if
 !网格
 		success=getArgs(8,'!',nameGridPath,'=',this%GridInputFilePath)
 		if(success/=0)then
 		 	ReadConfFile=success
-		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs 4 Grid;"
+		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs4Grid;"
 		end if
 !格式选择
 		success=getArgs(8,'!',namescheme,'=',this%Scheme)
 		if(success/=0)then
 		 	ReadConfFile=success
-		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs 4 Scheme;"
+		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs4Scheme;"
 		end if
 !输出类型
 		success=getArgs(8,'!',nameOutPutType,'=',this%OutPutFileType)
 		if(success/=0)then
 		 	ReadConfFile=success
-		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs 4 OutPutType;"
+		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs4OutPutType;"
 		end if
 !输出路径
 		success=getArgs(8,'!',nameOutPutPath,'=',this%OutPutFilePath)
 		if(success/=0)then
 		 	ReadConfFile=success
-		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs 4 OutPutPath;"
+		 	errorInfo=errorInfo(1:len_trim(errorInfo))//"errs4OutPutPath;"
 		end if
 	close(8)
 end function
@@ -101,7 +90,7 @@ function getBoundaryFilePath(this)
 	if (IsFileExist(this%BoundaryFilePath))then
 		getBoundaryFilePath=this%BoundaryFilePath
 	else
-		getBoundaryFilePath=""
+		print*,this%BoundaryFilePath,'Does Not Exsit.'
 	end if
 end function
 !获取网格文件路径
@@ -111,12 +100,15 @@ function getGridFilePath(this)
 	if(IsFileExist(this%GridInputFilePath))then
 		getGridFilePath=this%GridInputFilePath
 	else
-		getGridFilePath=""
+		print*,this%GridInputFilePath,'Does Not Exsit.'
 	end if
 end function
 function getScheme(this)
-type(GlobleParameters),intent(in)::this
-integer::getScheme
+	type(GlobleParameters),intent(in)::this
+	integer::getScheme
+	if(len_trim(this%Scheme)/=0)then
+	read(this%Scheme,*)getScheme
+	end if
 end function
 !获取输出文件类型
 function getOutPutFileType(this)
@@ -133,21 +125,7 @@ function GetOutPutFilePath(this)
 	if(IsFileExist(this%OutPutFilePath)) then
 		GetOutPutFilePath=this%OutPutFilePath
 	else
-		GetOutPutFilePath=""
+		print*,this%OutPutFilePath,'Does Not Exsit.'
 	endif
-end function
-!文件是否存在
-function IsFileExist(filepath)
-	logical::IsFileExist
-	character(128),intent(in)::filepath
-	integer::ierror,fileptr
-	fileptr=1024
-	open(unit=fileptr,file=filepath,status='old',action='read',iostat=ierror)
-	if(ierror/=0) then
-		IsFileExist=.false.
-	else
-		IsFileExist=.true.
-	end if
-	close(unit=fileptr)
 end function
 end module

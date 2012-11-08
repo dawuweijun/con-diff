@@ -50,7 +50,7 @@ function getArgs(FILEUNIT,notelabel,argname,splitlabel,inout_arg)
 	character,intent(in)::notelabel,splitlabel
 	character(128),intent(in)::argname
 	character(128),intent(inout)::inout_arg
-	character(128)::templine,tempname,tempvalue,templine_2
+	character(128)::templine,tempname,tempvalue
 	integer::status
 	getArgs=-1
    	do
@@ -58,17 +58,38 @@ function getArgs(FILEUNIT,notelabel,argname,splitlabel,inout_arg)
 		if(status/=0) exit
    			if(templine(1:1)/=notelabel) then!非注释行
 !移除所有空格
-			templine_2=ReamoveAllChar(templine,' ')
+			templine=ReamoveAllChar(templine,' ')
+!移除tab键
+			templine=ReamoveAllChar(templine,'	')
 !使用splitlabel分割字符串,获得变量名称和变量值字符串
 			call SplitString(templine,splitlabel,tempname,tempvalue)
 !获得大写变量名称
 			tempname=ToUperCase(tempname)
-			if (tempname==ToUperCase(argname))then!相等，取值，退出
-				inout_arg=trim(tempvalue)
-				getArgs=0
-				exit
+			!相等，值不为空，取值，退出
+			if (tempname==ToUperCase(argname))then
+				if (len_trim(tempvalue)/=0)then
+					inout_arg=trim(tempvalue)
+					getArgs=0
+					exit
+				else
+					print*,"The Value Of ",argname,"Is Null"
+				end if
 			end if
 		end if
    	end do
+end function
+!文件是否存在
+function IsFileExist(filepath)
+	logical::IsFileExist
+	character(128),intent(in)::filepath
+	integer::ierror,fileptr
+	fileptr=1024
+	open(unit=fileptr,file=filepath,status='old',action='read',iostat=ierror)
+	if(ierror/=0) then
+		IsFileExist=.false.
+	else
+		IsFileExist=.true.
+	end if
+	close(unit=fileptr)
 end function
 end module
