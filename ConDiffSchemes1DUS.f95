@@ -61,7 +61,8 @@ inout_mat%left_E,inout_mat%left_EE,in_FDPairs%F,in_FDPairs%D)
 		inout_mat%left_WW=- inout_mat%left_WW
 		inout_mat%left_EE=- inout_mat%left_EE
 	END IF
-	
+	call computeZeroFlag(inout_mat)
+	!call printZeroFlag(inout_mat)
 !分配内存在此处，下面的子程序不再分配内存
 end subroutine
 !********************************************************************
@@ -118,7 +119,10 @@ subroutine ConDiffSchemeUpwind1DSUSPe(A_W,A_P,A_E,F,D)
 !注意，A_W(0)与A_E(N)不设为零，主要用来存储方程右侧系数Su
 end subroutine
 !********************************************************************
-!2,混合格式 hybrid scheme
+!2,混合格式 hybrid scheme,
+!注意:		该方法产生的三对角矩阵存在大量的零不能使用直接使用TDMA算法。
+!		对于速度方向一定，可以改进使用TDMA算法。一般方法，使用高斯-塞德
+!		耳迭代。
 !********************************************************************
 !不定F，不定D型
 subroutine ConDiffSchemeHybrid1DSUSPe(A_W,A_P,A_E,F,D)
@@ -132,12 +136,18 @@ subroutine ConDiffSchemeHybrid1DSUSPe(A_W,A_P,A_E,F,D)
 		stop
 	end if
 !判断内存长度
-!
-	do I=1,N
+!此处边界处理很有意思
+		A_W(1)=D(1)+max(F(1),0.)!迎风格式
+		A_E(1)=max(-F(2),(D(2)-F(2)*0.5),0.)!混合格式
+		A_P(1)=A_W(1)+A_E(1)+F(2)-F(1)
+	do I=2,N-1
 		A_W(I)=max(F(I),(D(I)+F(I)*0.5),0.)
 		A_E(I)=max(-F(I+1),(D(I+1)-F(I+1)*0.5),0.)
 		A_P(I)=A_W(I)+A_E(I)+F(I+1)-F(I)
 	end do
+		A_W(N)=max(F(N),(D(N)+F(N)*0.5),0.)!混合格式
+		A_E(N)=D(N+1)+max(0.,-F(N+1))!迎风格式
+		A_P(N)=A_W(N)+A_E(N)+F(N+1)-F(N)
 !注意，A_W(0)与A_E(N)不设为零，主要用来存储方程右侧系数Su
 end subroutine
 !********************************************************************

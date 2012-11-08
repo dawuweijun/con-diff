@@ -31,20 +31,46 @@ do I=MaxSize-2,1,-1
 end do
 end if
 !三对角矩阵求解
+!print*,in_mat%left_W
+!print*,in_mat%left_P
+!print*,in_mat%left_E
+!print*,in_right
 !第一次迭代，消去left_W
-do I=2,MaxSize
-	temp=in_mat%left_W(I)/in_mat%left_P(I-1)
-	in_mat%left_P(I)=in_mat%left_P(I)- in_mat%left_E(I-1)*temp
-	in_right(I)=in_right(I)- in_right(I-1)*temp
-end do
+!print*,'Zero_Flag_left_W:',in_mat%Zero_Flag_left_W
+if(in_mat%Zero_Flag_left_W==0) then!全部为真
+	do I=2,MaxSize
+		temp=in_mat%left_W(I)/in_mat%left_P(I-1)
+		in_mat%left_P(I)=in_mat%left_P(I)- in_mat%left_E(I-1)*temp
+		in_right(I)=in_right(I)- in_right(I-1)*temp
+	end do
+	in_mat%Zero_Flag_left_W=2
+else if(in_mat%Zero_Flag_left_W==1)then!不全为真
+	print*,"This Array Is Not All Zero or All Not Zero : "
+	print*,in_mat%left_W
+	print*,"Quiting."
+end if
+!
+!print*,"after remove left_w"
+!print*,in_mat%left_W
+!print*,in_mat%left_P
+!print*,in_mat%left_E
+!print*,'in_right:',in_right
 !第二次迭代，消去left_E
-do I=MaxSize-1,1,-1
-	temp=in_mat%left_E(I)/in_mat%left_P(I+1)
-	in_right(I)=in_right(I)- in_right(I+1)*temp
-end do
+if(in_mat%Zero_Flag_left_E==0) then!全部为真
+	do I=MaxSize-1,1,-1
+		temp=in_mat%left_E(I)/in_mat%left_P(I+1)
+		in_right(I)=in_right(I)- in_right(I+1)*temp
+	end do
+	in_mat%Zero_Flag_left_E=2
+else if(in_mat%Zero_Flag_left_E==1)then!不全为真
+	print*,"This Array Is Not All Zero or All Not Zero : "
+	print*,in_mat%left_E
+	print*,"Quiting."
+end if
 !计算结果
 do I=1,MaxSize
 	DMEResolve(I)=in_right(I)/in_mat%left_P(I)
 end do
 end function
+
 end module
