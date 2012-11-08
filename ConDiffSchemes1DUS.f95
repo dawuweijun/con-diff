@@ -54,6 +54,13 @@ case (5)
 (inout_mat%left_WW,inout_mat%left_W,inout_mat%left_P,&
 inout_mat%left_E,inout_mat%left_EE,in_FDPairs%F,in_FDPairs%D)	
 	end select
+!将left_ww,left_W,left_E,left_EE反号
+		inout_mat%left_W=-inout_mat%left_W
+		inout_mat%left_E=- inout_mat%left_E
+	IF(in_scheme==5)THEN
+		inout_mat%left_WW=- inout_mat%left_WW
+		inout_mat%left_EE=- inout_mat%left_EE
+	END IF
 	
 !分配内存在此处，下面的子程序不再分配内存
 end subroutine

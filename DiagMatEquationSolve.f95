@@ -11,6 +11,7 @@ function DMEResolve(in_mat,in_right)
 	integer::I, MaxSize
 	MaxSize=in_mat%MatSize
 	print*,'The Size Of The Matrix To Solve Is :',MaxSize
+	print*,in_mat%left_W,in_mat%left_P,in_mat%left_E,in_right
 !直接对矩阵进行操作，不再复制
 !五对角矩阵，化简为三对角矩阵
 if(in_mat%MatType==5)then
