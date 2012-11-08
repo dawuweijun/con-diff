@@ -51,5 +51,6 @@ end if
 	call ConDiffScheme1D(mat,in_scheme,GenFDPairs(in_boundary_path,in_grid_path))
 	call ConDiffGenRightB1D(in_boundary_path,in_grid_path,in_scheme,mat,right)
 	ans=DMEResolve(mat,right)
+	print*,ans
 !call PutOut(输出格式,ans)
 end program condiff

@@ -81,11 +81,17 @@ subroutine ConDiffSchemeCnetral1DSUSPe(A_W,A_P,A_E,F,D)
 		stop
 	end if
 !判断内存长度
-	do I=1,N
+	A_W(1)=D(1)+F(1)
+	A_E(1)=D(2)-F(2)*0.5
+	A_P(1)=A_W(1)+A_E(1)+F(2)-F(1)
+	do I=2,N-1
 		A_W(I)=D(I)+F(I)*0.5
 		A_E(I)=D(I+1)-F(I+1)*0.5
 		A_P(I)=A_W(I)+A_E(I)+F(I+1)-F(I)
 	end do
+	A_W(N)=D(N)+F(N)*0.5
+	A_E(N)=D(N+1)-F(N+1)
+	A_P(N)=A_W(N)+A_E(N)+F(N+1)-F(I)
 !注意，A_W(0)与A_E(N)不设为零，主要用来存储方程右侧系数Su
 end subroutine
 !********************************************************************

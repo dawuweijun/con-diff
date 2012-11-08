@@ -10,21 +10,41 @@ function DMEResolve(in_mat,in_right)
 	real::temp
 	integer::I, MaxSize
 	MaxSize=in_mat%MatSize
-	print*,'The Size Of The Matrix To Solve Is :',MaxSize
-	print*,in_mat%left_W,in_mat%left_P,in_mat%left_E,in_right
+	allocate(DMEResolve(in_mat%MatSize))
 !直接对矩阵进行操作，不再复制
 !五对角矩阵，化简为三对角矩阵
 if(in_mat%MatType==5)then
-!第一次迭代，消除WW
+!第一次迭代，消除left_WW
 do I=3,MaxSize
 	temp=in_mat%left_WW(I)/in_mat%left_W(I-1)
 	in_mat%left_W(I)=in_mat%left_W(I)-in_mat%left_P(I-1)*temp
 	in_mat%left_P(I)=in_mat%left_P(I)-in_mat%left_E(I-1)*temp
-	!注意，in_mat%left_E（MaxSize）应该为零，但是无所谓
 	in_mat%left_E(I)=in_mat%left_E(I)-in_mat%left_EE(I-1)*temp
 	in_right(I)=in_right(I)-in_right(I-1)*temp
 end do
-!第二次迭代，消除EE
+!第二次迭代，消除left_EE
+do I=MaxSize-2,1,-1
+	temp=in_mat%left_EE(I)/in_mat%left_E(I+1)
+	in_mat%left_E(I)=in_mat%left_E(I)-in_mat%left_P(I+1)*temp
+	in_mat%left_P(I)=in_mat%left_P(I)-in_mat%left_W(I+1)*temp
+	in_right(I)=in_right(I)-in_right(I+1)*temp
+end do
 end if
+!三对角矩阵求解
+!第一次迭代，消去left_W
+do I=2,MaxSize
+	temp=in_mat%left_W(I)/in_mat%left_P(I-1)
+	in_mat%left_P(I)=in_mat%left_P(I)- in_mat%left_E(I-1)*temp
+	in_right(I)=in_right(I)- in_right(I-1)*temp
+end do
+!第二次迭代，消去left_E
+do I=MaxSize-1,1,-1
+	temp=in_mat%left_E(I)/in_mat%left_P(I+1)
+	in_right(I)=in_right(I)- in_right(I+1)*temp
+end do
+!计算结果
+do I=1,MaxSize
+	DMEResolve(I)=in_right(I)/in_mat%left_P(I)
+end do
 end function
 end module
