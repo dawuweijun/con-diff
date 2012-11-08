@@ -31,10 +31,13 @@ do I=MaxSize-2,1,-1
 end do
 end if
 !三对角矩阵求解
-!print*,in_mat%left_W
-!print*,in_mat%left_P
-!print*,in_mat%left_E
-!print*,in_right
+!in_mat%left_W(1)=0.0
+!in_mat%left_E(MaxSize)=0.0
+!call computeZeroFlag(in_mat)
+print*,in_mat%left_W
+print*,in_mat%left_P
+print*,in_mat%left_E
+print*,in_right
 !第一次迭代，消去left_W
 !print*,'Zero_Flag_left_W:',in_mat%Zero_Flag_left_W
 if(in_mat%Zero_Flag_left_W==0) then!全部为真
