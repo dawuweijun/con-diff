@@ -10,11 +10,11 @@ subroutine ConDiffGenRightB1D&
 (in_boundary_path,in_grid_path,in_scheme,in_mat,in_right)
 	real,dimension(:),allocatable::in_right
 	character(128)::in_boundary_path,in_grid_path,error
-	integer::in_scheme,success
+	integer::in_scheme,success,N
 	type(BoundaryFirst1DSteady)::boundary
 	
 	type(DiagMatrix)::in_mat
-	print*,"The ConDiffGenRightB Is Called !"
+!	print*,"The ConDiffGenRightB Is Called !"
 	if(in_scheme<0.or.in_scheme>5)then
 		return
 	end if
@@ -30,7 +30,8 @@ subroutine ConDiffGenRightB1D&
 		print*,"Success In Loading The Boundary File For Generating RightB."
 	end if
 !分配内存
-	allocate(in_right(in_mat%MatSize))
+	N=in_mat%MatSize
+	allocate(in_right(N))
 !根据格式和矩阵计算rightB
 !注意矩阵保存的系数除了P点外全部都已经反号了
 select case(in_scheme)
@@ -38,11 +39,14 @@ select case(in_scheme)
 case(0,1,2,3,4)
 	in_right=0.0
 	in_right(1)= -in_mat%left_W(1)*getPhiLeft(boundary)
-	in_right(in_mat%MatSize)=-in_mat%left_W(in_mat%MatSize)*getPhiRight(boundary)
+	in_right(N)=-in_mat%left_E(N)*getPhiRight(boundary)
 !二阶精度
 case(5)
-	print*,"Please Complete Me——The GenRightB for QUICK Scheme"	
-	stop
+	in_right=0.0
+	in_right(1)= -in_mat%left_W(1)*getPhiLeft(boundary)
+	in_right(2)=-in_mat%left_WW(2)*getPhiLeft(boundary)
+	in_right(N-1)=- in_mat%left_EE(N-1)*getPhiRight(boundary)
+	in_right(N)=-in_mat%left_E(N)*getPhiRight(boundary)
 end select
 
 end subroutine

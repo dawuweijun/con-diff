@@ -11,6 +11,13 @@ function DMEResolve(in_mat,in_right)
 	integer::I, MaxSize
 	MaxSize=in_mat%MatSize
 	allocate(DMEResolve(in_mat%MatSize))
+	print*,in_mat%left_WW
+	print*,in_mat%left_W
+	print*,in_mat%left_P
+	print*,in_mat%left_E
+	print*,in_mat%left_EE
+	print*,in_right
+	stop
 !直接对矩阵进行操作，不再复制
 !五对角矩阵，化简为三对角矩阵
 if(in_mat%MatType==5)then
@@ -31,10 +38,10 @@ do I=MaxSize-2,1,-1
 end do
 end if
 !三对角矩阵求解
-print*,in_mat%left_W
-print*,in_mat%left_P
-print*,in_mat%left_E
-print*,in_right
+!print*,in_mat%left_W
+!print*,in_mat%left_P
+!print*,in_mat%left_E
+!print*,in_right
 !第一次迭代，消去left_W
 	do I=2,MaxSize
 		temp=in_mat%left_W(I)/in_mat%left_P(I-1)

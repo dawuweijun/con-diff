@@ -225,7 +225,9 @@ subroutine ConDiffSchemeStandQUICK1DSUSPE(A_WW,A_W,A_P,A_E,A_EE,F,D)
 !	allocate(A_WW(N),A_W(N),A_P(N),A_E(N),A_EE(N))
 !判断内存长度
 !边界处理是个很重要的问题
-	do I=0,N
+!左边两个节点
+!中间节点
+	do I=2,N-2
 		A_temp=max(F(I+1),0.)
 		B_temp=max(-F(I),0.)
 		C_temp=max(-F(I+1),0.)
@@ -236,6 +238,7 @@ subroutine ConDiffSchemeStandQUICK1DSUSPE(A_WW,A_W,A_P,A_E,A_EE,F,D)
 		A_EE(I)=-0.125*C_temp
 		A_P(I)=A_WW(I)+A_W(I)+A_E(I)+A_EE(I)+F(I+1)-F(I)
 	end do
+!右边两个节点
 !TODO：考虑边界处理方法
 end subroutine
 !********************************************************************
