@@ -1,0 +1,151 @@
+GFORTRAN module version '6' created from ConDiffGloble.f95 on Fri Nov  9 07:21:01 2012
+MD5:1f9446931e23d777e6bd569e601c2b1d -- If you edit this, you'll get what you deserve.
+
+(() () () () () () () () () () () () () () () () () () () () () () ()
+() () () ())
+
+()
+
+()
+
+()
+
+()
+
+()
+
+(2 'condiffgloble' 'condiffgloble' 'condiffgloble' 1 ((MODULE
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) (UNKNOWN 0 0 0 UNKNOWN
+()) 0 0 () () 0 () () () 0 0)
+3 'fileoperate' 'fileoperate' 'fileoperate' 1 ((MODULE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) (UNKNOWN 0 0 0 UNKNOWN ()) 0 0 () () 0
+() () () 0 0)
+4 'getargs' 'fileoperate' 'getargs' 1 ((PROCEDURE UNKNOWN-INTENT
+MODULE-PROC DECL UNKNOWN 0 0 FUNCTION) (INTEGER 4 0 0 INTEGER ()) 5 0 (
+6 7 8 9 10) () 4 () () () 0 0)
+11 'getboundaryfilepath' 'condiffgloble' 'getboundaryfilepath' 1 ((
+PROCEDURE UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 FUNCTION) (
+CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128')))
+12 0 (13) () 11 () () () 0 0)
+14 'getgridfilepath' 'condiffgloble' 'getgridfilepath' 1 ((PROCEDURE
+UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 FUNCTION) (CHARACTER 1 0 0
+CHARACTER ((CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128'))) 15 0 (16) ()
+14 () () () 0 0)
+17 'getoutputfilepath' 'condiffgloble' 'getoutputfilepath' 1 ((
+PROCEDURE UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 FUNCTION) (
+CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128')))
+18 0 (19) () 17 () () () 0 0)
+20 'getoutputfiletype' 'condiffgloble' 'getoutputfiletype' 1 ((
+PROCEDURE UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 FUNCTION
+IMPLICIT_PURE) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '128'))) 21 0 (22) () 20 () () () 0 0)
+23 'getscheme' 'condiffgloble' 'getscheme' 1 ((PROCEDURE UNKNOWN-INTENT
+MODULE-PROC DECL UNKNOWN 0 0 FUNCTION IMPLICIT_PURE) (INTEGER 4 0 0
+INTEGER ()) 24 0 (25) () 23 () () () 0 0)
+26 'globleparameters' 'condiffgloble' 'globleparameters' 1 ((DERIVED
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) (UNKNOWN 0 0 0 UNKNOWN
+()) 0 0 () () 0 ((27 'confiurefilepath' (CHARACTER 1 0 0 CHARACTER ((
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128'))) () (UNKNOWN-FL
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS ()) (28
+'boundaryfilepath' (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '128'))) () (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS ()) (29 'gridinputfilepath' (
+CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128')))
+() (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0)
+UNKNOWN-ACCESS ()) (30 'scheme' (CHARACTER 1 0 0 CHARACTER ((CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '128'))) () (UNKNOWN-FL UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS ()) (31 'outputfiletype'
+(CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128')))
+() (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0)
+UNKNOWN-ACCESS ()) (32 'outputfilepath' (CHARACTER 1 0 0 CHARACTER ((
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128'))) () (UNKNOWN-FL
+UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS ()))
+PUBLIC (() () () ()) () 0 0 32926946)
+33 'initparameters' 'condiffgloble' 'initparameters' 1 ((PROCEDURE
+UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 SUBROUTINE) (UNKNOWN 0 0 0
+UNKNOWN ()) 34 0 (35 36) () 0 () () () 0 0)
+37 'isfileexist' 'fileoperate' 'isfileexist' 1 ((PROCEDURE
+UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 FUNCTION) (LOGICAL 4 0 0
+LOGICAL ()) 38 0 (39) () 37 () () () 0 0)
+40 'readconffile' 'condiffgloble' 'readconffile' 1 ((PROCEDURE
+UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 FUNCTION) (INTEGER 4 0 0
+INTEGER ()) 41 0 (42 43 44) () 40 () () () 0 0)
+45 'reamoveallchar' 'fileoperate' 'reamoveallchar' 1 ((PROCEDURE
+UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 FUNCTION IMPLICIT_PURE) (
+CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128')))
+46 0 (47 48) () 45 () () () 0 0)
+49 'splitstring' 'fileoperate' 'splitstring' 1 ((PROCEDURE
+UNKNOWN-INTENT MODULE-PROC DECL UNKNOWN 0 0 SUBROUTINE IMPLICIT_PURE) (
+UNKNOWN 0 0 0 UNKNOWN ()) 50 0 (51 52 53 54) () 0 () () () 0 0)
+55 'toupercase' 'fileoperate' 'toupercase' 1 ((PROCEDURE UNKNOWN-INTENT
+MODULE-PROC DECL UNKNOWN 0 0 FUNCTION) (CHARACTER 1 0 0 CHARACTER ((
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128'))) 56 0 (57) () 55 () () ()
+0 0)
+35 'this' '' 'this' 34 ((VARIABLE IN UNKNOWN-PROC UNKNOWN UNKNOWN 0 0
+DUMMY) (DERIVED 26 0 0 DERIVED ()) 0 0 () () 0 () () () 0 0)
+7 'notelabel' '' 'notelabel' 5 ((VARIABLE IN UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '1'))) 0 0 () () 0 () () () 0 0)
+9 'splitlabel' '' 'splitlabel' 5 ((VARIABLE IN UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '1'))) 0 0 () () 0 () () () 0 0)
+10 'inout_arg' '' 'inout_arg' 5 ((VARIABLE INOUT UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '128'))) 0 0 () () 0 () () () 0 0)
+8 'argname' '' 'argname' 5 ((VARIABLE IN UNKNOWN-PROC UNKNOWN UNKNOWN 0
+0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0 INTEGER ())
+0 '128'))) 0 0 () () 0 () () () 0 0)
+52 'splitlabel' '' 'splitlabel' 50 ((VARIABLE IN UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '1'))) 0 0 () () 0 () () () 0 0)
+51 'in_string' '' 'in_string' 50 ((VARIABLE IN UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '128'))) 0 0 () () 0 () () () 0 0)
+54 'out_string_back' '' 'out_string_back' 50 ((VARIABLE INOUT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128'))) 0 0 () () 0 () () () 0 0)
+53 'out_string_forward' '' 'out_string_forward' 50 ((VARIABLE INOUT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128'))) 0 0 () () 0 () () () 0 0)
+6 'fileunit' '' 'fileunit' 5 ((VARIABLE IN UNKNOWN-PROC UNKNOWN UNKNOWN
+0 0 DUMMY) (INTEGER 4 0 0 INTEGER ()) 0 0 () () 0 () () () 0 0)
+39 'filepath' '' 'filepath' 38 ((VARIABLE IN UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0
+INTEGER ()) 0 '128'))) 0 0 () () 0 () () () 0 0)
+48 'chartoremove' '' 'chartoremove' 46 ((VARIABLE IN UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '1'))) 0 0 () () 0 () () () 0 0)
+47 'string' '' 'string' 46 ((VARIABLE IN UNKNOWN-PROC UNKNOWN UNKNOWN 0
+0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0 INTEGER ())
+0 '128'))) 0 0 () () 0 () () () 0 0)
+57 'string' '' 'string' 56 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '128'))) 0 0 () () 0 () () () 0 0)
+36 'configurefile' '' 'configurefile' 34 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128'))) 0 0 () () 0 () () () 0 0)
+42 'this' '' 'this' 41 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DUMMY) (DERIVED 26 0 0 DERIVED ()) 0 0 () () 0 () () () 0 0)
+43 'strfilepath' '' 'strfilepath' 41 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((
+CONSTANT (INTEGER 4 0 0 INTEGER ()) 0 '128'))) 0 0 () () 0 () () () 0 0)
+44 'errorinfo' '' 'errorinfo' 41 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN UNKNOWN 0 0 DUMMY) (CHARACTER 1 0 0 CHARACTER ((CONSTANT (
+INTEGER 4 0 0 INTEGER ()) 0 '128'))) 0 0 () () 0 () () () 0 0)
+13 'this' '' 'this' 12 ((VARIABLE IN UNKNOWN-PROC UNKNOWN UNKNOWN 0 0
+DUMMY) (DERIVED 26 0 0 DERIVED ()) 0 0 () () 0 () () () 0 0)
+16 'this' '' 'this' 15 ((VARIABLE IN UNKNOWN-PROC UNKNOWN UNKNOWN 0 0
+DUMMY) (DERIVED 26 0 0 DERIVED ()) 0 0 () () 0 () () () 0 0)
+25 'this' '' 'this' 24 ((VARIABLE IN UNKNOWN-PROC UNKNOWN UNKNOWN 0 0
+DUMMY) (DERIVED 26 0 0 DERIVED ()) 0 0 () () 0 () () () 0 0)
+22 'this' '' 'this' 21 ((VARIABLE IN UNKNOWN-PROC UNKNOWN UNKNOWN 0 0
+DUMMY) (DERIVED 26 0 0 DERIVED ()) 0 0 () () 0 () () () 0 0)
+19 'this' '' 'this' 18 ((VARIABLE IN UNKNOWN-PROC UNKNOWN UNKNOWN 0 0
+DUMMY) (DERIVED 26 0 0 DERIVED ()) 0 0 () () 0 () () () 0 0)
+)
+
+('condiffgloble' 0 2 'fileoperate' 0 3 'getargs' 0 4 'getboundaryfilepath'
+0 11 'getgridfilepath' 0 14 'getoutputfilepath' 0 17 'getoutputfiletype'
+0 20 'getscheme' 0 23 'globleparameters' 0 26 'initparameters' 0 33
+'isfileexist' 0 37 'readconffile' 0 40 'reamoveallchar' 0 45 'splitstring'
+0 49 'toupercase' 0 55)

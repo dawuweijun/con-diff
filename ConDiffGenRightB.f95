@@ -42,6 +42,7 @@ case(0,1,2,3,4)
 !二阶精度
 case(5)
 	print*,"Please Complete Me——The GenRightB for QUICK Scheme"	
+	stop
 end select
 
 end subroutine

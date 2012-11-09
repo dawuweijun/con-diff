@@ -9,16 +9,16 @@ type DiagMatrix
 !0-------------------没有零
 !1-------------------部分为零
 !2-------------------全为零
-!	integer::Zero_Flag_left_WW
-!	integer::Zero_Flag_left_W
-!	integer::Zero_Flag_left_P
-!	integer::Zero_Flag_left_E
-!	integer::Zero_Flag_left_EE
+	integer::Zero_Flag_left_WW
+	integer::Zero_Flag_left_W
+	integer::Zero_Flag_left_P
+	integer::Zero_Flag_left_E
+	integer::Zero_Flag_left_EE
 	real,dimension(:),allocatable::left_WW
-	real,dimension(:),allocatable::left_W
-	real,dimension(:),allocatable::left_P
-	real,dimension(:),allocatable::left_E
-	real,dimension(:),allocatable::left_EE
+!	real,dimension(:),allocatable::left_W
+!	real,dimension(:),allocatable::left_P
+!	real,dimension(:),allocatable::left_E
+!	real,dimension(:),allocatable::left_EE
 end type
 contains
 !******************************************************************************
