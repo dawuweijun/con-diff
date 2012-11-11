@@ -17,7 +17,7 @@ function DMEResolve(in_mat,in_right)
 	print*,in_mat%left_E
 	print*,in_mat%left_EE
 	print*,in_right
-	stop
+!	stop
 !直接对矩阵进行操作，不再复制
 !五对角矩阵，化简为三对角矩阵
 if(in_mat%MatType==5)then

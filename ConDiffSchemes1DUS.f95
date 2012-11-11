@@ -48,14 +48,14 @@ case(3)
 case (4)
 	call ConDiffSchemePowerLaw1DSUSPe&
 (inout_mat%left_W,inout_mat%left_P,inout_mat%left_E,in_FDPairs%F,in_FDPairs%D)
-!5,
+!5,QUICK格式
 case (5)
 	call ConDiffSchemeStandQUICK1DSUSPE&
 (inout_mat%left_WW,inout_mat%left_W,inout_mat%left_P,&
 inout_mat%left_E,inout_mat%left_EE,in_FDPairs%F,in_FDPairs%D)	
 	end select
 !将left_ww,left_W,left_E,left_EE反号
-		inout_mat%left_W	=-inout_mat%left_W
+		inout_mat%left_W	=- inout_mat%left_W
 		inout_mat%left_E	=- inout_mat%left_E
 	IF(in_scheme==5)THEN
 		inout_mat%left_WW	=- inout_mat%left_WW
@@ -225,9 +225,35 @@ subroutine ConDiffSchemeStandQUICK1DSUSPE(A_WW,A_W,A_P,A_E,A_EE,F,D)
 !	allocate(A_WW(N),A_W(N),A_P(N),A_E(N),A_EE(N))
 !判断内存长度
 !边界处理是个很重要的问题
-!左边两个节点
+!一下代码中存在的除6.0并没有错，这是由于generateRightB中的机制导致的
+!
+!
+!
+!左边两个节点		
+		A_temp=max(F(2),0.)!max(Fe,0)
+		B_temp=max(-F(1),0.)!max(-Fw,0)
+		C_temp=max(-F(2),0.)!max(-Fe,0)
+		D_temp=max(F(1),0.)!max(Fw,0)
+		
+		A_WW(1)=0.0
+		A_W(1)=0.25*A_temp+4./3.*D(1)+F(1)
+		A_E(1)=D(2)+D(1)/6.0-0.375*A_temp+0.75*C_temp
+		A_EE(1)=-0.125*C_temp
+		A_P(1)=A_WW(1)+A_W(1)+A_E(1)+A_EE(1)+F(2)-F(1)
+!********************************************************
+		A_temp=max(F(3),0.)
+		B_temp=max(-F(2),0.)
+		C_temp=max(-F(3),0.)
+		D_temp=max(F(2),0.)
+		
+		A_WW(2)=-0.25*D_temp
+		A_W(2)=D(2)+0.125*A_temp-0.375*B_temp+0.875*D_temp
+		A_E(2)=D(3)+0.125*B_temp-0.375*A_temp+0.75*C_temp
+		A_EE(2)=-0.125*C_temp
+		A_P(2)=A_WW(2)+A_W(2)+A_E(2)+A_EE(2)+F(3)-F(2)
 !中间节点
-	do I=2,N-2
+
+	do I=3,N-2
 		A_temp=max(F(I+1),0.)
 		B_temp=max(-F(I),0.)
 		C_temp=max(-F(I+1),0.)
@@ -239,6 +265,27 @@ subroutine ConDiffSchemeStandQUICK1DSUSPE(A_WW,A_W,A_P,A_E,A_EE,F,D)
 		A_P(I)=A_WW(I)+A_W(I)+A_E(I)+A_EE(I)+F(I+1)-F(I)
 	end do
 !右边两个节点
+		A_temp=max(F(N),0.)
+		B_temp=max(-F(N-1),0.)
+		C_temp=max(-F(N),0.)
+		D_temp=max(F(N-1),0.)
+		
+		A_WW(N-1)=-0.125*D_temp
+		A_W(N-1)=D(N-1)+0.125*A_temp-0.375*B_temp+0.75*D_temp
+		A_E(N-1)=D(N)+0.125*B_temp-0.375*A_temp+0.875*C_temp
+		A_EE(N-1)=-0.25*C_temp
+		A_P(N-1)=A_WW(N-1)+A_W(N-1)+A_E(N-1)+A_EE(N-1)+F(N)-F(N-1)
+		
+		A_temp=max(F(N+1),0.)
+		B_temp=max(-F(N),0.)
+		C_temp=max(-F(N+1),0.)
+		D_temp=max(F(N),0.)
+		
+		A_WW(N)=-0.125*D_temp
+		A_W(N)=D(N)+D(N+1)/6.0-0.375*B_temp+0.75*D_temp
+		A_E(N)=-0.25*B_temp+4./3.*D(N+1)-F(N+1)
+		A_EE(N)=0.
+		A_P(N)=A_WW(N)+A_W(N)+A_E(N)+A_EE(N)+F(N+1)-F(N)
 !TODO：考虑边界处理方法
 end subroutine
 !********************************************************************
