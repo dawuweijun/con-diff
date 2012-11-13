@@ -194,8 +194,8 @@ subroutine ConDiffSchemePowerLaw1DSUSPe(A_W,A_P,A_E,F,D)
 	do I=1,N
 		temp_1=1.-0.1*abs(F(I)/D(I))
 		temp_2=1.-0.1*abs(F(I+1)/D(I+1))
-		A_W(I)=D(I)*max(0.,temp_1*temp_1*temp_1*temp_1*temp_1)+max(F(I),0.)
-		A_E(I)=D(I+1)*max(0.,temp_2*temp_2*temp_2*temp_2*temp_2)+max(-F(I+1),0.)
+		A_W(I)=D(I)*max(0.,temp_1**5)+max(F(I),0.)
+		A_E(I)=D(I+1)*max(0.,temp_2**5)+max(-F(I+1),0.)
 		A_P(I)=A_W(I)+A_E(I)+F(I+1)-F(I)
 	end do
 !注意，A_W(0)与A_E(N)不设为零，主要用来存储方程右侧系数Su

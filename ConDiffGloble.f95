@@ -27,7 +27,7 @@ subroutine InitParameters(this,configurefile)
 !TODO:文件存在，调用解析函数读入
 	if(ReadConfFile(this,configurefile,errorInfo)/=0) then
 		print*,errorInfo !错误输出
-		stop!退出程序
+		stop "***ERROR***:PASER CONFIGURE FILE"!退出程序
 	else
 		print*,"Success In Reading The Configure File!"
 	end if

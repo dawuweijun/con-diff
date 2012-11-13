@@ -8,6 +8,7 @@ interface readBoundary
 module procedure readBoundaryFile1DS
 end interface
 contains
+!******************************************************************************
 !对流与扩散一维问题一类恒定边界
 function readBoundaryFile1DS(this,strFilePath,error)
 	character(128),intent(in)::strFilePath

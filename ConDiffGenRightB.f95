@@ -24,7 +24,7 @@ subroutine ConDiffGenRightB1D&
 	success=readBoundaryFile1DS(boundary,in_boundary_path,error)
 	if(success/=0)then
 		print*,"Errors When Loading The Boundary File For Generating RightB: ",error
-		stop
+		stop "Generate Right B"
 	else
 !加载边界条件成功
 		print*,"Success In Loading The Boundary File For Generating RightB."
