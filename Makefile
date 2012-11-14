@@ -16,7 +16,7 @@ sources = condiff_oneDimension.f95 \
 		ConDiffGenFD.f95 \
 		ConDiffGenRightB.f95 \
 		ConDiffGloble.f95 \
-		ConDiffSchemes1DUS.f95 \
+		ConDiffSchemes1D.f95 \
 		FileOperate.f95 \
 		BoundaryDefine.f95 \
 		BoundaryLoad.f95 \
