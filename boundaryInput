@@ -1,7 +1,12 @@
 !******************************************************************************
-!
+! AUTHOR 	:Black
+! DATE		:2012年10月30日
+! email		:1507912984@qq.com
+! LICENSE	:You can do whatever you want.
 !******************************************************************************
-
+!		This is a basic test of boundary. You should obay some rule when you
+!	change	this file. For more information,go to files named BoundaryDefine.f,
+!	BoundaryLoad.f and FileOperate.f.
 !******************************************************************************
 
 Phi_left	=1.0
