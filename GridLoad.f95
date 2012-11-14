@@ -1,3 +1,12 @@
+!******************************************************************************
+! AUTHOR 	:Black
+! DATE		:2012年10月30日
+! email		:1507912984@qq.com
+! LICENSE	:You can do whatever you want.
+!******************************************************************************
+!		This file achieved the methord for loading the grid defined in file
+!	named GridDefine.f. For More details how it work, go to the file named
+!	FileOperate.f 
 module GridLoad
 use GridDefine
 use FileOperate

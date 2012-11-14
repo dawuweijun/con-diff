@@ -1,19 +1,27 @@
-!************************模块说明*****************************
-!定义，初始化全局变量，读取输入参数，解析输入文件
-!*************************************************************
+!******************************************************************************
+! AUTHOR 	:Black
+! DATE		:2012年10月30日
+! email		:1507912984@qq.com
+! LICENSE	:You can do whatever you want.
+!******************************************************************************
+!		This file defined some global parameters necessary. For more details of
+! 	how does it read parameter in, have a look at the file named FileOperate.f.
+!	For more information about the format of configure file, have a look at
+!	the file named test.conf.  
+!******************************************************************************
 module ConDiffGloble
 use FileOperate
 implicit none
-!*******************输入文件参数格式说明***********************
+!*******************输入文件参数格式说明****************************************
 !一维稳态，对流扩散问题，多种可选格式
-!*************************************************************
+!******************************************************************************
 type GlobleParameters
-	character(128)::ConfiureFilePath		!输入文件路径，由命令行获取
+	character(128)::ConfiureFilePath	!输入文件路径，由命令行获取
 	character(128)::BoundaryFilePath	!边界文件路径，由配置文件获取
 	character(128)::GridInputFilePath	!网格文件路径，由配置文件获取
 	character(128)::Scheme				!格式选择，有配置文件获取
-	character(128)::OutPutFileType			!输出类型，由配置文件获取
-	character(128)::OutPutFilePath			!输出路径，由配置文件获取
+	character(128)::OutPutFileType		!输出类型，由配置文件获取
+	character(128)::OutPutFilePath		!输出路径，由配置文件获取
 end type
 
 contains

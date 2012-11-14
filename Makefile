@@ -1,8 +1,14 @@
-##################################################################
-#author:black
-#email:1507912984@qq.com
-#date:2012/11/06
-##################################################################
+#******************************************************************************
+# AUTHOR 	:Black
+# DATE		:2012年10月30日
+# email		:1507912984@qq.com
+# LICENSE	:You can do whatever you want.
+#******************************************************************************
+#		This file achieved the autobuild of this project, you may change the 
+#	compiler whatever you like. If you don't have a make tool just GNU make,
+#	this file is useless for you.
+#		However, this file have some problems when make, what you should do is
+#	just try more times. 
 compiler=gfortran
 debugflag= -g -O3
 sources = condiff_oneDimension.f95 \

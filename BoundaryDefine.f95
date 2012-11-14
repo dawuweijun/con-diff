@@ -1,3 +1,11 @@
+!******************************************************************************
+! AUTHOR 	:Black
+! DATE		:2012年10月30日
+! email		:1507912984@qq.com
+! LICENSE	:You can do whatever you want.
+!******************************************************************************
+!		This file defined a boundary of first type and some methods for the
+!problem this project concerned. 
 module BoundaryDefine
 implicit none
 type BoundaryFirst1DSteady

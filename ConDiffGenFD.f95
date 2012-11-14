@@ -1,3 +1,11 @@
+!******************************************************************************
+! AUTHOR 	:Black
+! DATE		:2012年10月30日
+! email		:1507912984@qq.com
+! LICENSE	:You can do whatever you want.
+!******************************************************************************
+!		This file achieved the generation of the number F and D. You should 
+!	have noticd the difference of D between boundary nodes and inner nodes.
 module ConDiffGenFD
 !边界
 use BoundaryDefine

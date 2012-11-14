@@ -1,3 +1,12 @@
+!******************************************************************************
+! AUTHOR 	:Black
+! DATE		:2012年10月30日
+! email		:1507912984@qq.com
+! LICENSE	:You can do whatever you want.
+!******************************************************************************
+!		This file difines all the schemes for one dimension condiff problem. 
+!	More details for the boundary in the file named ConDiffGenFD.f. 
+
 module ConDiffSchemes1D
 use Matrix
 use ConDiffGenFD

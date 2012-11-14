@@ -1,3 +1,13 @@
+!******************************************************************************
+! AUTHOR 	:Black
+! DATE		:2012年10月30日
+! email		:1507912984@qq.com
+! LICENSE	:You can do whatever you want.
+!******************************************************************************
+!		This file achieved some basic function for dealing parameters file. You
+!	may reused them in your codes once you are going to read some parameters in
+!	a bit complex format. For more details about the parameters file format, go
+!	to the file named test.conf.
 module FileOperate
 implicit none
   contains
