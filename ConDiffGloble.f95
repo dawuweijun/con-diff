@@ -19,7 +19,7 @@ type GlobleParameters
 	character(128)::ConfiureFilePath	!输入文件路径，由命令行获取
 	character(128)::BoundaryFilePath	!边界文件路径，由配置文件获取
 	character(128)::GridInputFilePath	!网格文件路径，由配置文件获取
-	character(128)::Scheme				!格式选择，有配置文件获取
+	character(128)::Scheme			!格式选择，有配置文件获取
 	character(128)::OutPutFileType		!输出类型，由配置文件获取
 	character(128)::OutPutFilePath		!输出路径，由配置文件获取
 end type

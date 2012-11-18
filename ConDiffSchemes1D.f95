@@ -91,6 +91,10 @@ subroutine ConDiffSchemeCnetral1DSUSPe(A_W,A_P,A_E,F,D)
 		stop
 	end if
 !判断内存长度
+if(.not.isArraySizeEqual2_3(N,A_W,A_P,A_E)) then
+	print*,"Errs in the lenth of A_W, A_P or A_E:Quiting"
+	stop
+end if
 	A_W(1)=D(1)+F(1)
 	A_E(1)=D(2)-F(2)*0.5
 	A_P(1)=A_W(1)+A_E(1)+F(2)-F(1)
@@ -119,7 +123,10 @@ subroutine ConDiffSchemeUpwind1DSUSPe(A_W,A_P,A_E,F,D)
 		stop
 	end if
 !判断内存长度
-!
+if(.not.isArraySizeEqual2_3(N,A_W,A_P,A_E)) then
+	print*,"Errs in the lenth of A_W, A_P or A_E:Quiting"
+	stop
+end if
 	do I=1,N
 		A_W(I)=D(I)+max(F(I),0.)
 		A_E(I)=D(I+1)+max(0.,-F(I+1))
@@ -142,6 +149,10 @@ subroutine ConDiffSchemeHybrid1DSUSPe(A_W,A_P,A_E,F,D)
 		stop
 	end if
 !判断内存长度
+if(.not.isArraySizeEqual2_3(N,A_W,A_P,A_E)) then
+	print*,"Errs in the lenth of A_W, A_P or A_E:Quiting"
+	stop
+end if
 !此处边界处理很有意思
 		A_W(1)=D(1)+max(F(1),0.)!迎风格式
 		A_E(1)=max(-F(2),(D(2)-F(2)*0.5),0.)!混合格式
@@ -171,6 +182,10 @@ subroutine ConDiffSchemeExp1DSUSPe(A_W,A_P,A_E,F,D)
 		stop
 	end if
 !判断内存长度
+if(.not.isArraySizeEqual2_3(N,A_W,A_P,A_E)) then
+	print*,"Errs in the lenth of A_W, A_P or A_E:Quiting"
+	stop
+end if
 !指数格式的边界处理,无需特殊处理
 	do I=1,N
 		tempexpw=exp(F(I)/D(I))
@@ -199,6 +214,10 @@ subroutine ConDiffSchemePowerLaw1DSUSPe(A_W,A_P,A_E,F,D)
 		stop
 	end if
 !判断内存长度
+if(.not.isArraySizeEqual2_3(N,A_W,A_P,A_E)) then
+	print*,"Errs in the lenth of A_W, A_P or A_E:Quiting"
+	stop
+end if
 !乘方格式的边界处理，很有意思,无需特殊处理
 	do I=1,N
 		temp_1=1.-0.1*abs(F(I)/D(I))
@@ -233,6 +252,10 @@ subroutine ConDiffSchemeStandQUICK1DSUSPE(A_WW,A_W,A_P,A_E,A_EE,F,D)
 	end if
 !	allocate(A_WW(N),A_W(N),A_P(N),A_E(N),A_EE(N))
 !判断内存长度
+if(.not.isArraySizeEqual2_5(N,A_WW,A_W,A_P,A_E,A_EE)) then
+	print*,"Errs in the lenth of A_WW, A_W, A_P, A_E or A_EE:Quiting"
+	stop
+end if
 !边界处理是个很重要的问题
 !一下代码中存在的除6.0并没有错，这是由于generateRightB中的机制导致的
 !
