@@ -1,12 +1,12 @@
+module DMESolve
 !******************************************************************************
 ! AUTHOR 	:Black
 ! DATE		:2012年10月30日
 ! email		:1507912984@qq.com
 ! LICENSE	:You can do whatever you want.
 !******************************************************************************
-!		This file achieved the solution of fivediagmatrix and tridiagmatrix.
-!	More details of diagmatrix in the file named Matrix.f 
-module DMESolve
+!	This file achieved the solution of fivediagmatrix and tridiagmatrix.
+!More details of diagmatrix in the file named Matrix.f
 use Matrix
 implicit none
 contains

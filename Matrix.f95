@@ -1,13 +1,13 @@
+module Matrix
 !******************************************************************************
 ! AUTHOR 	:Black
 ! DATE		:2012年10月30日
 ! email		:1507912984@qq.com
 ! LICENSE	:You can do whatever you want.
 !******************************************************************************
-!		This file defined an unified form of five diagmatrix and tridiagmatrix.
-!	More details for solving the diagmatrix equation in the file named
-!	DiagMatEqutionSolve.f.
-module Matrix
+!	This file defined an unified form of five diagmatrix and tridiagmatrix.
+!More details for solving the diagmatrix equation in the file named
+!DiagMatEqutionSolve.f.
 implicit none
 !删除三对角矩阵，统一使用五对角矩阵存储
 type DiagMatrix

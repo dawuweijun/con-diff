@@ -11,12 +11,15 @@
 #	just try more times. 
 compiler=gfortran
 debugflag= -g -O3
+#debugflag= -O3
 sources = condiff_oneDimension.f95 \
 		Matrix.f95 \
 		ConDiffGenFD.f95 \
 		ConDiffGenRightB.f95 \
+		ConDiffGenPos.f95 \
 		ConDiffGloble.f95 \
 		ConDiffSchemes1D.f95 \
+		ConDiffOutPut.f95 \
 		FileOperate.f95 \
 		BoundaryDefine.f95 \
 		BoundaryLoad.f95 \
@@ -27,7 +30,11 @@ sources = condiff_oneDimension.f95 \
 exeoutput= main
 all:condiff_1d
 clean:
-	rm -f ./*~ ./*.mod $(exeoutput)
+	rm -f ./*~  $(exeoutput)
 condiff_1d:
 	$(compiler) $(debugflag) -o $(exeoutput) $(sources)
+strip:	all
+	strip $(exeoutput)
+cleanall:clean
+	rm -f ./*.mod
 	

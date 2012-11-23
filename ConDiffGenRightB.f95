@@ -1,14 +1,14 @@
+module ConDiffGenRightB
 !******************************************************************************
 ! AUTHOR 	:Black
 ! DATE		:2012年10月30日
 ! email		:1507912984@qq.com
 ! LICENSE	:You can do whatever you want.
 !******************************************************************************
-!		This file achieved the generation of the vector in the right side of a 
-!	DiagMatrix Equation. For more information of diffrent scheme, go to the 
-!	file named ConDiffScheme1DUS.f. For more information about the matrix, go
-!	to the file named Matrix.f
-module ConDiffGenRightB
+!	This file achieved the generation of the vector in the right side of a 
+!DiagMatrix Equation. For more information of diffrent scheme, go to the 
+!file named ConDiffScheme1DUS.f. For more information about the matrix, go
+!to the file named Matrix.f
 !简化，根据边界条件文件，矩阵，格式选择计算右侧向量
 !一维
 use Matrix

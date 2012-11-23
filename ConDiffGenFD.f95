@@ -1,3 +1,4 @@
+module ConDiffGenFD
 !******************************************************************************
 ! AUTHOR 	:Black
 ! DATE		:2012年10月30日
@@ -6,7 +7,6 @@
 !******************************************************************************
 !		This file achieved the generation of the number F and D. You should 
 !	have noticd the difference of D between boundary nodes and inner nodes.
-module ConDiffGenFD
 !边界
 use BoundaryDefine
 use BoundaryLoad

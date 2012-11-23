@@ -1,14 +1,14 @@
+module FileOperate
 !******************************************************************************
 ! AUTHOR 	:Black
 ! DATE		:2012年10月30日
 ! email		:1507912984@qq.com
 ! LICENSE	:You can do whatever you want.
 !******************************************************************************
-!		This file achieved some basic function for dealing parameters file. You
-!	may reused them in your codes once you are going to read some parameters in
-!	a bit complex format. For more details about the parameters file format, go
-!	to the file named test.conf.
-module FileOperate
+!	This file achieved some basic function for dealing parameters file. You
+!may reused them in your codes once you are going to read some parameters in
+!a bit complex format. For more details about the parameters file format, go
+!to the file named test.conf.
 implicit none
   contains
 !转换为大写字符串
@@ -69,8 +69,10 @@ function getArgs(FILEUNIT,notelabel,argname,splitlabel,inout_arg)
    			if(templine(1:1)/=notelabel) then!非注释行
 !移除所有空格
 			templine=ReamoveAllChar(templine,' ')
+!			print*,templine
 !移除tab键
 			templine=ReamoveAllChar(templine,'	')
+!			print*,templine
 !使用splitlabel分割字符串,获得变量名称和变量值字符串
 			call SplitString(templine,splitlabel,tempname,tempvalue)
 !获得大写变量名称

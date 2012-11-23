@@ -1,36 +1,38 @@
-!******************************************************************************
-! AUTHOR 	:Black
-! DATE		:2012年10月30日
-! email		:1507912984@qq.com
-! LICENSE	:You can do whatever you want.
-!******************************************************************************
-!		This file difines all the schemes for one dimension condiff problem. 
-!	More details for the boundary in the file named ConDiffGenFD.f. 
+!------------------------------------------------------------------------------
+!-------AUTHOR 	:Black
+!-------DATE	:2012年10月30日
+!-------email	:1507912984@qq.com
+!-------LICENSE	:You can do whatever you want.
+!------------------------------------------------------------------------------
 
+!	This file difines all the schemes for one dimension condiff problem. 
+!More details for the boundary in the file named ConDiffGenFD.f. 
+	
 module ConDiffSchemes1D
-use Matrix
-use ConDiffGenFD
+	use Matrix
+	use ConDiffGenFD
 implicit none
+
 !********************************************************************
 !ONE DIMENSION，steady
 !********************************************************************
 
-!一阶精度,定义稳态一维一阶精度统一接口
-!中心差分格式
+
+! 中心差分格式
 
 contains
 subroutine ConDiffScheme1D(inout_mat,in_scheme,in_FDPairs)
-	type(DiagMatrix),intent(inout)::inout_mat
+	TYPE(DiagMatrix),intent(inout)::inout_mat
 	integer,intent(in)::in_scheme
-	type(FDPairs),intent(in)::in_FDPairs
+	TYPE(FDPairs),intent(in)::in_FDPairs
 	print*,'The Scheme You Selected Is :',in_scheme
-!根据in_scheme的不同选择不同算法
-!TODO:完善该处程序
+! 根据in_scheme的不同选择不同算法
+! TODO:完善该处程序
 	if(in_scheme<0.or.in_scheme>5)then
 		inout_mat%MatSize=-1
 		return
 	end if
-!给inout_mat分配内存
+! 给inout_mat分配内存
 	if(in_scheme<5)then
 		inout_mat=BuildTriDiagMatrix(in_FDPairs%FDSize-1)
 	else

@@ -1,14 +1,13 @@
+module BoundaryLoad
 !******************************************************************************
 ! AUTHOR 	:Black
 ! DATE		:2012年10月30日
 ! email		:1507912984@qq.com
 ! LICENSE	:You can do whatever you want.
 !******************************************************************************
-!		This file achieved the methord for loading the boundary defined in file
-!	named BoundaryDefine.f. For More details how it work, go to the file named
-!	FileOperate.f 
-module BoundaryLoad
-
+!	This file achieved the methord for loading the boundary defined in file
+!named BoundaryDefine.f. For More details how it work, go to the file named
+!FileOperate.f
 use BoundaryDefine
 use FileOperate
 
