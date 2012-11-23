@@ -16,29 +16,18 @@ use BoundaryDefine
 use BoundaryLoad
 implicit none
 contains
-subroutine ConDiffGenRightB1D&
-(in_boundary_path,in_grid_path,in_scheme,in_mat,in_right)
-	real,dimension(:),allocatable::in_right
-	character(128)::in_boundary_path,in_grid_path,error
-	integer::in_scheme,success,N
-	type(BoundaryFirst1DSteady)::boundary
-	
+
+subroutine ConDiffGenRightB1D(in_boundary,in_scheme,in_mat,in_right)
+	type(BoundaryFirst1DSteady),intent(in)::in_boundary
+!	type(Simple1DGrid),intent(in)::in_grid
+	integer,intent(in)::in_scheme
 	type(DiagMatrix)::in_mat
-!	print*,"The ConDiffGenRightB Is Called !"
+	real,dimension(:),allocatable::in_right
+	integer::N
 	if(in_scheme<0.or.in_scheme>5)then
 		return
 	end if
 !说明，暂时不需加载GridFile，非均匀网格时需要加载GridFile
-!均匀网格，其他请自行实现
-!TODO:加载BoundaryFile
-	success=readBoundaryFile1DS(boundary,in_boundary_path,error)
-	if(success/=0)then
-		print*,"Errors When Loading The Boundary File For Generating RightB: ",error
-		stop "Generate Right B"
-	else
-!加载边界条件成功
-		print*,"Success In Loading The Boundary File For Generating RightB."
-	end if
 !分配内存
 	N=in_mat%MatSize
 	allocate(in_right(N))
@@ -48,15 +37,15 @@ select case(in_scheme)
 !一阶精度，边界处理方法一模一样
 case(0,1,2,3,4)
 	in_right=0.0
-	in_right(1)= -in_mat%left_W(1)*getPhiLeft(boundary)
-	in_right(N)=-in_mat%left_E(N)*getPhiRight(boundary)
+	in_right(1)= -in_mat%left_W(1)*getPhiLeft(in_boundary)
+	in_right(N)=-in_mat%left_E(N)*getPhiRight(in_boundary)
 !二阶精度
 case(5)
 	in_right=0.0
-	in_right(1)= -in_mat%left_W(1)*getPhiLeft(boundary)
-	in_right(2)=-in_mat%left_WW(2)*getPhiLeft(boundary)
-	in_right(N-1)=- in_mat%left_EE(N-1)*getPhiRight(boundary)
-	in_right(N)=-in_mat%left_E(N)*getPhiRight(boundary)
+	in_right(1)= -in_mat%left_W(1)*getPhiLeft(in_boundary)
+	in_right(2)=-in_mat%left_WW(2)*getPhiLeft(in_boundary)
+	in_right(N-1)=- in_mat%left_EE(N-1)*getPhiRight(in_boundary)
+	in_right(N)=-in_mat%left_E(N)*getPhiRight(in_boundary)
 end select
 
 end subroutine

@@ -14,35 +14,29 @@
 !	请勿在此停留太多。
 !	改进提示：	
 !		1,程序中多处动态分配的内存都未进行销毁，此处千万要改正。
-!		2,程序中多出数据本应进行共享，因为未进行共享而造成程序比较累赘。
-!		3,尽管此程序可以进行扩展的空间很大，但几乎没有是扩展的实际价值，仅供
+!		2,尽管此程序可以进行扩展的空间很大，但几乎没有是扩展的实际价值，仅供
 !	初学者学习之用。
-!		4,本程序中可供参考的内容比较少，本人推荐各位后来者详细查看六种格式的边
+!		3,本程序中可供参考的内容比较少，本人推荐各位后来者详细查看六种格式的边
 !	界处理，其他各处是否详细了解请自斟酌。
 program condiff
 	use ConDiffGloble
+	use ConDiffGlobleDefine
 	use Matrix
 	use ConDiffGenFD
 	use ConDiffSchemes1D
 	use ConDiffGenRightB
 	use ConDiffGenPos
 	use ConDiffOutPut
+	use GridLoad
 	use DMESolve
 implicit none
 !------------------------------------------------------------------------------
 !	定义全局变量
 !------------------------------------------------------------------------------
-	
-	type (GlobleParameters)::parameters
-	real,dimension(:),allocatable::ans,right,AnsForPrint
 	integer error				!用于错误返回
-	type(DiagMatrix)::mat			!矩阵
-	integer in_scheme			!格式选择
-	character(128) in_boundary_path		!边界文件路径
-	character(128) in_grid_path		!网格文件路径
-	integer::argc!the number of parameters from command line
-	character(128)::args!for saving the parameter string
-	integer i
+	real,dimension(:),allocatable::AnsForPrint
+	integer i,success
+	character(128)::errorInfo
 !******************************************************************************
 !Read parameters from the command line
 !******************************************************************************
@@ -64,32 +58,47 @@ end if
 !******************************************************************************
 !调用输入解析模块，解析输入文件
 !******************************************************************************
-	call InitParameters(parameters,args)
+	call InitParameters(myGloblePara,args)
+	success=readBoundary(myBoundary,myGloblePara%BoundaryFilePath,errorInfo)
+	if(success/=0)then
+		print *,"Errors For Load Boundary File :"
+		print *,errorInfo
+	endif
+	success=readGrid(myGrid,myGloblePara%GridInputFilePath,errorInfo)
+	if(success/=0)then
+		print *,"Errors For Load Boundary File :"
+		print *,errorInfo
+	endif	
+	myFDPairs=GenFDPairs(myBoundary,myGrid)
 !******************************************************************************
-!
+call ConDiffScheme1D(myMat,myScheme,myFDPairs)
 !******************************************************************************
-	in_scheme=getScheme(parameters)
-	in_boundary_path=getBoundaryFilePath(parameters)
-	in_grid_path=getGridFilePath(parameters)
+call ConDiffGenRightB1D(myBoundary,myScheme,myMat,myRight)
 !******************************************************************************
-call ConDiffScheme1D(mat,in_scheme,GenFDPairs(in_boundary_path,in_grid_path))
-!******************************************************************************
-call ConDiffGenRightB1D(in_boundary_path,in_grid_path,in_scheme,mat,right)
-!******************************************************************************
-	ans=DMEResolve(mat,right)
+	myAns=DMEResolve(myMat,myRight)
 !	打开输出文件
-	open(20,file=getOutPutFilePath(parameters),action="write")
+
+
+
+	open(20,file=myGloblePara%OutPutFilePath,action="write")
 !注意，ans长度和位置列表的长度并不一致，这是由于边界界面是已知的
 !为了保证输出时不因节点数的不同而存在太大差异的，应该将这两个界面也要加进去
-	allocate(AnsForPrint(size(ans)+2))
-	AnsForPrint(1)=1.
-	AnsForPrint(size(ans)+2)=0.
-	do i=2,size(ans)+1
-		AnsForPrint(i)=ans(i-1)
+	allocate(AnsForPrint(size(myAns)+2))
+
+	AnsForPrint(1)=getPhiLeft(myBoundary)
+	AnsForPrint(size(myAns)+2)=getPhiRight(myBoundary)
+	do i=2,size(myAns)+1
+		AnsForPrint(i)=myAns(i-1)
 	end do
-	call OutPut(20,getnameVal(parameters),getnameX(parameters),AnsForPrint,GenPosVec(in_grid_path),getOutPutFileType(parameters),error)
+
+	call OutPut(20,myGloblePara%namePhi,myGloblePara%nameX,AnsForPrint,&
+	GenPosVec(myGrid),myGloblePara%OutPutFileType,error)
 	close(20)
+
 	if(error/=0)then
-		print*,"error ,while write ans to the file named ",getOutPutFilePath(parameters)
+		print*,"error ,while write ans to the file named ",getOutPutFilePath(myGloblePara)
+	else
+		print*,"Success ,see the ouput file : ",myGloblePara%OutPutFilePath
 	endif
+
 end program condiff
