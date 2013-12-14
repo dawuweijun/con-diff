@@ -36,7 +36,7 @@ implicit none
 	integer error				!用于错误返回
 	real,dimension(:),allocatable::AnsForPrint
 	integer i,success
-	character(128)::errorInfo
+	character(128)::errorInfo,outputfilename
 !******************************************************************************
 !Read parameters from the command line
 !******************************************************************************
@@ -71,16 +71,18 @@ end if
 	endif	
 	myFDPairs=GenFDPairs(myBoundary,myGrid)
 !******************************************************************************
-call ConDiffScheme1D(myMat,myScheme,myFDPairs)
+call ConDiffScheme1D(myMat,myGloblePara%Scheme,myFDPairs)
 !******************************************************************************
-call ConDiffGenRightB1D(myBoundary,myScheme,myMat,myRight)
+call ConDiffGenRightB1D(myBoundary,myGloblePara%Scheme,myMat,myRight)
 !******************************************************************************
 	myAns=DMEResolve(myMat,myRight)
 !	打开输出文件
 
 
-
-	open(20,file=myGloblePara%OutPutFilePath,action="write")
+outputfilename=myGloblePara%OutPutFilePath(1:len_trim(myGloblePara%OutPutFilePath))//&
+	"_Scheme_"//myGloblePara%Scheme(1:len_trim(myGloblePara%Scheme))//&
+	".dat"
+	open(20,file=outputfilename,action="write")
 !注意，ans长度和位置列表的长度并不一致，这是由于边界界面是已知的
 !为了保证输出时不因节点数的不同而存在太大差异的，应该将这两个界面也要加进去
 	allocate(AnsForPrint(size(myAns)+2))
@@ -96,9 +98,9 @@ call ConDiffGenRightB1D(myBoundary,myScheme,myMat,myRight)
 	close(20)
 
 	if(error/=0)then
-		print*,"error ,while write ans to the file named ",getOutPutFilePath(myGloblePara)
+		print*,"error ,while write ans to the file named ",outputfilename
 	else
-		print*,"Success ,see the ouput file : ",myGloblePara%OutPutFilePath
+		print*,"Success ,see the ouput file : ",outputfilename
 	endif
 
 end program condiff

@@ -18,7 +18,7 @@ function GenPosVec(in_grid)
 	real::deltX
 !使用有限容积法离散
 	posSize=in_grid%NumberOfPoints+2
-	deltX=in_grid%Length/in_grid%NumberOfPoints
+	deltX=real(in_grid%Length)/real(in_grid%NumberOfPoints)
 	allocate(GenPosVec(posSize))
 !左边界面	
 	GenPosVec(1)=0.0

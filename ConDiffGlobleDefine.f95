@@ -10,7 +10,7 @@ implicit none
 	integer::argc		!the number of parameters from command line
 	character(128)::args	!for saving the parameter string
 	type (GlobleParameters)::myGloblePara
-	integer::myScheme
+	!integer::myScheme
 	type (BoundaryFirst1DSteady)::myBoundary
 	real,dimension(:),allocatable::myRight
 	real,dimension(:),allocatable::myAns

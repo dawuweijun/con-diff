@@ -39,6 +39,10 @@ if(in_mat%MatType==5)then
 	end do
 end if
 !三对角矩阵求解
+print*,in_mat%left_W
+print*,in_mat%left_P
+print*,in_mat%left_E
+print*,in_right
 !第一次迭代，消去left_W
 	do I=2,MaxSize
 		temp=in_mat%left_W(I)/in_mat%left_P(I-1)

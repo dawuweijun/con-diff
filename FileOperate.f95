@@ -63,6 +63,7 @@ function getArgs(FILEUNIT,notelabel,argname,splitlabel,inout_arg)
 	character(128)::templine,tempname,tempvalue
 	integer::status
 	getArgs=-1
+	rewind(FILEUNIT)!将文件重定位到文件开始
    	do
    		read(FILEUNIT,'(A)',iostat=status) templine
 		if(status/=0) exit

@@ -33,11 +33,14 @@ function GenFDPairs(in_boundary,in_grid)
 	GenFDPairs%FDSize=in_grid%NumberOfPoints+1
 	allocate(GenFDPairs%F(GenFDPairs%FDSize),GenFDPairs%D(GenFDPairs%FDSize))
 !整体赋值
+print*,in_boundary%Velocity*in_boundary%Density
 	GenFDPairs%F=in_boundary%Velocity*in_boundary%Density
 	GenFDPairs%D=in_boundary%Gama*in_grid%NumberOfPoints/in_grid%Length
 !边界处理
 	GenFDPairs%D(1)=GenFDPairs%D(1)*2
 	GenFDPairs%D(GenFDPairs%FDSize)=GenFDPairs%D(GenFDPairs%FDSize)*2
 !完毕
+print*,GenFDPairs%F
+print*,GenFDPairs%D
 end function
 end module

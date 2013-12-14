@@ -22,11 +22,6 @@ end type
 
 contains
 !******************************************************************************
-!function BuildDiagMatrix(mat_type,mat_size)
-!	type(DiagMatrix)::BuildDiagMatrix
-!	integer,intent(in)::mat_type,mat_size
-!end function
-!******************************************************************************
 !创建一个三对角矩阵
 !******************************************************************************
 function BuildTriDiagMatrix(in_N)

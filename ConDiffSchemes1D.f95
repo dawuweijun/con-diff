@@ -21,24 +21,26 @@ implicit none
 ! 中心差分格式
 
 contains
-subroutine ConDiffScheme1D(inout_mat,in_scheme,in_FDPairs)
+subroutine ConDiffScheme1D(inout_mat,in_Scheme,in_FDPairs)
 	TYPE(DiagMatrix),intent(inout)::inout_mat
-	integer,intent(in)::in_scheme
+	character(len=128),intent(in)::in_Scheme
+	integer::intScheme
 	TYPE(FDPairs),intent(in)::in_FDPairs
 	print*,'The Scheme You Selected Is :',in_scheme
 ! 根据in_scheme的不同选择不同算法
 ! TODO:完善该处程序
-	if(in_scheme<0.or.in_scheme>5)then
+	read(in_scheme,*)intScheme
+	if(intScheme<0.or.intScheme>5)then
 		inout_mat%MatSize=-1
 		return
 	end if
 ! 给inout_mat分配内存
-	if(in_scheme<5)then
+	if(intScheme<5)then
 		inout_mat=BuildTriDiagMatrix(in_FDPairs%FDSize-1)
 	else
 		inout_mat=BuildFiveDiagMatrix(in_FDPairs%FDSize-1)
 	end if
-	select case(in_scheme)
+	select case(intScheme)
 !0，中心差分
 case(0)
 	call ConDiffSchemeCnetral1DSUSPe&
@@ -68,7 +70,7 @@ inout_mat%left_E,inout_mat%left_EE,in_FDPairs%F,in_FDPairs%D)
 !将left_ww,left_W,left_E,left_EE反号
 		inout_mat%left_W	=- inout_mat%left_W
 		inout_mat%left_E	=- inout_mat%left_E
-	IF(in_scheme==5)THEN
+	IF(intScheme==5)THEN
 		inout_mat%left_WW	=- inout_mat%left_WW
 		inout_mat%left_EE	=- inout_mat%left_EE
 	END IF
@@ -100,6 +102,7 @@ end if
 	A_W(1)=D(1)+F(1)
 	A_E(1)=D(2)-F(2)*0.5
 	A_P(1)=A_W(1)+A_E(1)+F(2)-F(1)
+	!A_P(1)=A_E(1)+F(2)-F(1)
 	do I=2,N-1
 		A_W(I)=D(I)+F(I)*0.5
 		A_E(I)=D(I+1)-F(I+1)*0.5
@@ -108,6 +111,7 @@ end if
 	A_W(N)=D(N)+F(N)*0.5
 	A_E(N)=D(N+1)-F(N+1)
 	A_P(N)=A_W(N)+A_E(N)+F(N+1)-F(I)
+	!A_P(N)=A_W(N)+F(N+1)-F(I)
 !注意，A_W(0)与A_E(N)不设为零，主要用来存储方程右侧系数Su
 end subroutine
 !********************************************************************

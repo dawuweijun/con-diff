@@ -20,11 +20,13 @@ contains
 subroutine ConDiffGenRightB1D(in_boundary,in_scheme,in_mat,in_right)
 	type(BoundaryFirst1DSteady),intent(in)::in_boundary
 !	type(Simple1DGrid),intent(in)::in_grid
-	integer,intent(in)::in_scheme
+	character(128),intent(in)::in_scheme
+	integer::intScheme
 	type(DiagMatrix)::in_mat
 	real,dimension(:),allocatable::in_right
 	integer::N
-	if(in_scheme<0.or.in_scheme>5)then
+	read(in_scheme,*)intScheme
+	if(intScheme<0.or.intScheme>5)then
 		return
 	end if
 !说明，暂时不需加载GridFile，非均匀网格时需要加载GridFile
@@ -33,7 +35,7 @@ subroutine ConDiffGenRightB1D(in_boundary,in_scheme,in_mat,in_right)
 	allocate(in_right(N))
 !根据格式和矩阵计算rightB
 !注意矩阵保存的系数除了P点外全部都已经反号了
-select case(in_scheme)
+select case(intScheme)
 !一阶精度，边界处理方法一模一样
 case(0,1,2,3,4)
 	in_right=0.0
